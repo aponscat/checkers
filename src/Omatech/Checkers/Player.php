@@ -14,6 +14,4 @@ class Player {
     return strtolower($this->color);
   }
 
-
-
 }

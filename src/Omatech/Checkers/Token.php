@@ -80,7 +80,33 @@ class Token {
       //echo 'source: '.$this->getTile()->getCoordinates().' player '.$this->getPlayer()->getColor()." Symbol=".$this->getSymbol()."\n";
 
       foreach (range(1, $this->maxMovement) as $i) {
-          $new_x=($starting_row+($this->row_direction*$i));
+        $new_x=($starting_row+($this->row_direction*$i));
+        $new_y=$starting_column+$i;
+        //echo "trying $new_x-$new_y\n";
+
+        if ($board->checkInBounds($new_x, $new_y)) {
+            $destination_tile=$board->getTile($new_x, $new_y);
+            if ($destination_tile->getColor() != $this->getColor()) {
+                $res[]=$destination_tile;
+                //echo "possible move to $new_x-$new_y\n";
+            }
+        }
+
+        $new_y=$starting_column-$i;
+        //echo "trying $new_x-$new_y\n";
+
+        if ($board->checkInBounds($new_x, $new_y)) {
+            $destination_tile=$board->getTile($new_x, $new_y);
+            if ($destination_tile->getColor() != $this->getColor()) {
+                $res[]=$destination_tile;
+                //echo "possible move to $new_x-$new_y\n";
+            }
+        }
+
+        if ($this->isQueen())
+        {
+          //echo "Is Queen!!!\n";
+          $new_x=($starting_row+((-1*$this->row_direction)*$i));
           $new_y=$starting_column+$i;
           //echo "trying $new_x-$new_y\n";
 
@@ -100,41 +126,11 @@ class Token {
               if ($destination_tile->getColor() != $this->getColor()) {
                   $res[]=$destination_tile;
                   //echo "possible move to $new_x-$new_y\n";
-              }
           }
-
-          if ($this->isQueen())
-          {
-            //echo "Is Queen!!!\n";
-            $new_x=($starting_row+((-1*$this->row_direction)*$i));
-            $new_y=$starting_column+$i;
-            //echo "trying $new_x-$new_y\n";
-
-            if ($board->checkInBounds($new_x, $new_y)) {
-                $destination_tile=$board->getTile($new_x, $new_y);
-                if ($destination_tile->getColor() != $this->getColor()) {
-                    $res[]=$destination_tile;
-                    //echo "possible move to $new_x-$new_y\n";
-                }
-            }
-  
-            $new_y=$starting_column-$i;
-            //echo "trying $new_x-$new_y\n";
-
-            if ($board->checkInBounds($new_x, $new_y)) {
-                $destination_tile=$board->getTile($new_x, $new_y);
-                if ($destination_tile->getColor() != $this->getColor()) {
-                    $res[]=$destination_tile;
-                    //echo "possible move to $new_x-$new_y\n";
-                }
-            }
-  
-          }
-
-
-
+        }
       }
-      return $res;
-  }
+    }
+    return $res;
+}
 
 }

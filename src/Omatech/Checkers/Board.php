@@ -69,39 +69,6 @@ class Board {
     return $this->getTileFromInput($input)->getToken()->isValidSource($player);
   }
 
-
-
-  /*
-  function isValidSource($player, $tile)
-  {
-    //echo "player ".$player->getColor()." source ".$tile->getCoordinates()." with color ".$tile->getColor()."\n";
-    if ($player->getColor()==$tile->getColor())
-    {
-      $next_row=$tile->getToken()->getNextRow();
-      if ($next_row>=0 && $next_row<DIMENSIONS)
-      {
-        $next_left_column=$tile->getColumn()-1;
-        if ($next_left_column>=0 && $next_left_column<DIMENSIONS)
-        {
-          if ($this->isValidDestinationFromInput($tile->getToken(), $next_row.'-'.$next_left_column))
-          {
-            return true;
-          }
-        }
-
-        $next_right_column=$tile->getColumn()+1;
-        if ($next_right_column>=0 && $next_right_column<DIMENSIONS)
-        {
-          if ($this->isValidDestinationFromInput($tile->getToken(), $next_row.'-'.$next_right_column))
-          {
-            return true;
-          }
-        }
-      }
-    }
-  }
-  */
-
   function isValidDestinationFromInput($token, $input_destination)
   {
     if (!isset($token)) return false;
