@@ -26,13 +26,22 @@ class Checkers {
       $io->printBoard($this->board);
       $movement=$io->askForValidMovement($this->turn->getCurrentPlayer());
       $movement->do();
-      $winner=$this->board->getWinner($this->turn);
+      $winner=$this->board->getWinner($this);
       if (!$winner) $this->turn->nextPlayer();
     } while (!$winner);
 
     $io->clearScreen();
     echo "The winner is ".$winner->getColor()."\n";
     $io->printBoard($this->board);
+  }
+
+  function getPlayerByColor($color): Player
+  {
+    foreach ($this->players as $player)
+    {
+      if ($player->getColor()==$color) return $player;
+    }
+    return null;
   }
 }
 

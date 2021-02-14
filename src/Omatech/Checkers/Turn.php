@@ -25,13 +25,6 @@ class Turn {
     }
   }
 
-  function getPlayerByColor($color): Player
-  {
-    foreach ($this->players as $player)
-    {
-      if ($player->getColor()==$color) return $player;
-    }
-    return null;
-  }
+
 
 }

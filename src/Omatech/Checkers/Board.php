@@ -61,7 +61,7 @@ class Board {
     return $this->getTile($coord[0], $coord[1]);
   }
 
-  function getWinner ($turn): ?Player {
+  function getWinner ($checkers): ?Player {
     $xs=$os=0;
 
     foreach (range(0, DIMENSIONS-1) as $row)
@@ -74,8 +74,8 @@ class Board {
       }
     }
 
-    if ($os==0) return $turn->getPlayerByColor('x');
-    if ($xs==0) return $turn->getPlayerByColor('o');
+    if ($os==0) return $checkers->getPlayerByColor('x');
+    if ($xs==0) return $checkers->getPlayerByColor('o');
     return null;
   }
 
