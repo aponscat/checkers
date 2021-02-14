@@ -24,7 +24,7 @@ class IO {
   function getSourceTile(Player $player, bool $simulate=false)
   {
     $possible_sources=$this->board->getAllTilesForPlayer($player);
-    echo "\n".$player->getColor()." those are your possible sources:\n";
+    echo "\n".$player->getColor()." those are your possible moves:\n";
     $res=[];
     foreach ($possible_sources as $source) {
       $possible_destination_tiles=$source->getToken()->possibleDestinationTiles();
@@ -65,27 +65,32 @@ class IO {
     }
   }
 
+  function getBestMoveFromPossibilities($possibilities)
+  {
+    $killer_tiles=[];
+    foreach ($possibilities as $one_tile)
+    {
+      if ($one_tile->getToken())
+      {
+        $killer_tiles[]=$one_tile;
+      }
+    }
+
+    if ($killer_tiles)
+    {
+      $tile=$possibilities[array_rand($killer_tiles)];
+    }
+    else
+    {
+      $tile=$possibilities[array_rand($possibilities)];
+    }
+    return $tile;
+  }
 
   function simulateOrAskForInput($message, $possibilities, $simulate=false): string {
     if ($simulate)
     {
-      $killer_tiles=[];
-      foreach ($possibilities as $one_tile)
-      {
-        if ($one_tile->getToken())
-        {
-          $killer_tiles[]=$one_tile;
-        }
-      }
-
-      if ($killer_tiles)
-      {
-        $tile=$possibilities[array_rand($killer_tiles)];
-      }
-      else
-      {
-        $tile=$possibilities[array_rand($possibilities)];
-      }
+      $tile=$this->getBestMoveFromPossibilities($possibilities);
 
       $input=$tile->getCoordinates();
     }
@@ -94,7 +99,12 @@ class IO {
       $input=readline($message); 
     }
 
-    return $input;
+    foreach ($possibilities as $possibility)
+    {
+      if ($possibility->getCoordinates()==$input) return $input;
+    }
+    echo "No es una casilla válida\n";
+    return $this->simulateOrAskForInput($message, $possibilities, $simulate);
   }
 
   function printBoard(Board $board)
