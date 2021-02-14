@@ -37,7 +37,7 @@ class Checkers {
 
   function getPlayerByColor($color): Player
   {
-    foreach ($this->players as $player)
+    foreach ($this->players_array as $player)
     {
       if ($player->getColor()==$color) return $player;
     }
