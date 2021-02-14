@@ -61,22 +61,6 @@ class Board {
     return $this->getTile($coord[0], $coord[1]);
   }
 
-  function isValidSourceFromInput($player, $input)
-  {
-    //echo "entro a isValidSourceFromInput amb player ".$player->getColor()." i input $input\n";
-    if (!$this->checkValidCoordinate($input)) return false;
-
-    return $this->getTileFromInput($input)->getToken()->isValidSource($player);
-  }
-
-  function isValidDestinationFromInput($token, $input_destination)
-  {
-    if (!isset($token)) return false;
-    if (!$this->checkValidCoordinate($input_destination)) return false;
-
-    return $token->isValidDestination($this->getTileFromInput($input_destination));
-  }
-
   function getWinner ($turn): ?Player {
     $xs=$os=0;
 
@@ -102,17 +86,6 @@ class Board {
     return false;
   }
 
-  public function checkValidCoordinate (string $input): bool
-  {
-    $input_array=$this->getCoordinateFromInput($input);
-    if (!isset($input_array) || !is_array($input_array)) return false;
-
-    if (count($input_array)==2)
-    {
-      return $this->checkInBounds($input_array[0], $input_array[1]);
-    }
-    return false;
-  }
 
   public static function getCoordinateFromInput (string $input): array {
     return explode('-', $input);    
@@ -135,7 +108,6 @@ class Board {
     {
       $ret.="$i";
     }
-
     $ret.="\n";
     $i=0;
     foreach (range(0, DIMENSIONS-1) as $row)

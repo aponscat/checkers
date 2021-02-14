@@ -9,10 +9,24 @@ class IO {
     $this->board=$board;
   }
 
-  function askForValidMovement(Player $player, bool $simulate=false): Movement {
+  function askForTypeOfPlayer($player)
+  {
+    $input=readline("Select Human or Computer for player ".$player->getColor()." [C|h]:");
+    if ('h'==strtolower($input))
+    {
+      $player->setHuman();
+    }
+    else
+    {
+      $player->setComputer();
+    }
+  }
 
-    $source_tile=$this->getSourceTile($player, $simulate);
-    $destination_tile=$this->getDestinationTile($player, $source_tile, $simulate);
+  function askForValidMovement(Player $player): Movement {
+
+    $simulate=$player->MustSimulate();
+    $source_tile=$this->getSourceTile($player);
+    $destination_tile=$this->getDestinationTile($player, $source_tile);
     if ($simulate)
     {
       echo "\n".$player->getColor()." is moving from ".$source_tile->getCoordinates()." to ".$destination_tile->getCoordinates()."\n";
@@ -21,8 +35,9 @@ class IO {
     return new Movement($this->board, $source_tile, $destination_tile);
   }
 
-  function getSourceTile(Player $player, bool $simulate=false)
+  function getSourceTile(Player $player)
   {
+    $simulate=$player->mustSimulate();
     $possible_sources=$this->board->getAllTilesForPlayer($player);
     echo "\n".$player->getColor()." those are your possible moves:\n";
     $res=[];
@@ -40,7 +55,7 @@ class IO {
 
     if ($res)
     {
-      $input_source=$this->simulateOrAskForInput('Enter source: ', $res, $simulate);
+      $input_source=$this->simulateOrAskForInput('Enter source player '.$player->getColor().' of type '.$player->getType().': ', $res, $simulate);
       $source_tile=$this->board->getTileFromInput($input_source);
       return $source_tile;
     }
@@ -50,12 +65,13 @@ class IO {
     }
   }
 
-  function getDestinationTile(Player $player, Tile $source_tile, bool $simulate=false)
+  function getDestinationTile(Player $player, Tile $source_tile)
   {
+    $simulate=$player->mustSimulate();
     $possible_destinations=$source_tile->getToken()->possibleDestinationTiles();
     if ($possible_destinations)
     {
-      $input_destination=$this->simulateOrAskForInput('Enter destination: ', $possible_destinations, $simulate);
+      $input_destination=$this->simulateOrAskForInput('Enter destination player '.$player->getColor().' of type '.$player->getType().': ', $possible_destinations, $simulate);
       $destination_tile=$this->board->getTileFromInput($input_destination);
       return $destination_tile;
     }

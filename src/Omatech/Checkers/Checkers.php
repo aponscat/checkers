@@ -17,12 +17,14 @@ class Checkers {
     $this->board->init($this->players_array);
   }
 
-  function play($simulate=false) {
+  function play() {
     $io=new IO($this->board);
+    $io->askForTypeOfPlayer($this->players_array[0]);
+    $io->askForTypeOfPlayer($this->players_array[1]);
     do {
       $io->clearScreen();
       $io->printBoard($this->board);
-      $movement=$io->askForValidMovement($this->turn->getCurrentPlayer(), $simulate);
+      $movement=$io->askForValidMovement($this->turn->getCurrentPlayer());
       $movement->do();
       $winner=$this->board->getWinner($this->turn);
       if (!$winner) $this->turn->nextPlayer();

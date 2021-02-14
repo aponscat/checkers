@@ -9,7 +9,7 @@ class Turn {
   function __construct($players)
   {
     $this->players=$players;
-    $this->current_player=0;
+    $this->current_player=1;
   }
 
   function getCurrentPlayer(): Player {
