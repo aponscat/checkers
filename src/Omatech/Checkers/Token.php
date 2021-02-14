@@ -69,6 +69,28 @@ class Token {
     return ($this->isQueen);
   }
 
+/*
+  function IsPossible($already_scanned)
+  {
+    $board=$this->getTile()->getBoard();
+    $x=$this->getTile()->getRow();
+    $y=$this->getTile()->getColumn();
+    $res=$already_scanned;
+    if ($this->isQueen)
+    {
+      $newX=$x+1; $newY=$y+1;
+      if ($board->checkInBounds($newX, $newY))
+      {
+        $res[]=$board->getTile($newX, $newY);
+        if (!$board->getTile($newX, $newY)->getToken())
+        {
+          $res
+        }
+      }
+    }
+  }
+*/
+
   function possibleDestinationTiles()
   {
       $board=$this->getTile()->getBoard();

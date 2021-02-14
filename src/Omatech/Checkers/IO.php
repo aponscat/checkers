@@ -109,27 +109,6 @@ class IO {
     }
   }
 
-  function getBestMoveFromPossibilities($possibilities)
-  {
-    $killer_tiles=[];
-    foreach ($possibilities as $one_tile)
-    {
-      if ($one_tile->getToken()!=null)
-      {
-        $killer_tiles[]=$one_tile;
-      }
-    }
-
-    if ($killer_tiles)
-    {
-      $tile=$possibilities[array_rand($killer_tiles)];
-    }
-    else
-    {
-      $tile=$possibilities[array_rand($possibilities)];
-    }
-    return $tile;
-  }
 
   function simulateOrAskForInput($message, $killer_possibilities, $normal_possibilities, $simulate=false): string {
     if ($simulate)
