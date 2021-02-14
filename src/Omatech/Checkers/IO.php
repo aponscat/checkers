@@ -3,30 +3,91 @@ namespace Omatech\Checkers;
 
 class IO {
 
-  function askForValidMovement(Board $board, Player $player, $simulate=false): Movement {
-    do {
-      $input_source=$this->simulateOrAskForInput('Player '.$player->getColor().', enter source coordinates: ', $simulate);
-    } while (!static::checkValidCoordinate($input_source) || !$board->isValidSourceFromInput($player, $input_source));
-    $source_tile=$board->getTileFromInput($input_source);
+  private Board $board;
 
-    do {
-      $input_destination=$this->simulateOrAskForInput('Player '.$player->getColor().', enter destination coordinates: ', $simulate);
-    } while (!$this->checkValidCoordinate($input_destination) || !$board->isValidDestinationFromInput($player, $source_tile, $input_destination));
-    $destination_tile=$board->getTileFromInput($input_destination);
-
-    if ($simulate)
-    {
-      echo "\n".$player->getColor()." is moving from $input_source to $input_destination\n";
-      sleep(1);
-    }
-    return new Movement($source_tile, $destination_tile);
+  function __construct (Board $board) {
+    $this->board=$board;
   }
 
-  function simulateOrAskForInput($message, $simulate=false): string {
+  function askForValidMovement(Player $player, bool $simulate=false): Movement {
+
+    $source_tile=$this->getSourceTile($player, $simulate);
+    $destination_tile=$this->getDestinationTile($player, $source_tile, $simulate);
     if ($simulate)
     {
-      $input=rand(0, DIMENSIONS-1).'-'.rand(0, DIMENSIONS-1);
-      echo '.';  
+      echo "\n".$player->getColor()." is moving from ".$source_tile->getCoordinates()." to ".$destination_tile->getCoordinates()."\n";
+      sleep(1);
+    }
+    return new Movement($this->board, $source_tile, $destination_tile);
+  }
+
+  function getSourceTile(Player $player, bool $simulate=false)
+  {
+    $possible_sources=$this->board->getAllTilesForPlayer($player);
+    echo "\n".$player->getColor()." those are your possible sources:\n";
+    $res=[];
+    foreach ($possible_sources as $source) {
+      $possible_destination_tiles=$source->getToken()->possibleDestinationTiles();
+      if ($possible_destination_tiles)
+      {
+        $res[]=$source;
+        foreach ($possible_destination_tiles as $destination)
+        {
+          echo $source->getCoordinates().' -> '.$destination->getCoordinates()."\n";
+        }
+      }
+    }
+
+    if ($res)
+    {
+      $input_source=$this->simulateOrAskForInput('Enter source: ', $res, $simulate);
+      $source_tile=$this->board->getTileFromInput($input_source);
+      return $source_tile;
+    }
+    else
+    {
+      die ("Tablas");
+    }
+  }
+
+  function getDestinationTile(Player $player, Tile $source_tile, bool $simulate=false)
+  {
+    $possible_destinations=$source_tile->getToken()->possibleDestinationTiles();
+    if ($possible_destinations)
+    {
+      $input_destination=$this->simulateOrAskForInput('Enter destination: ', $possible_destinations, $simulate);
+      $destination_tile=$this->board->getTileFromInput($input_destination);
+      return $destination_tile;
+    }
+    else
+    {
+      die ("Tablas");
+    }
+  }
+
+
+  function simulateOrAskForInput($message, $possibilities, $simulate=false): string {
+    if ($simulate)
+    {
+      $killer_tiles=[];
+      foreach ($possibilities as $one_tile)
+      {
+        if ($one_tile->getToken())
+        {
+          $killer_tiles[]=$one_tile;
+        }
+      }
+
+      if ($killer_tiles)
+      {
+        $tile=$possibilities[array_rand($killer_tiles)];
+      }
+      else
+      {
+        $tile=$possibilities[array_rand($possibilities)];
+      }
+
+      $input=$tile->getCoordinates();
     }
     else
     {
@@ -38,29 +99,13 @@ class IO {
 
   function printBoard(Board $board)
   {
-    echo chr(27).chr(91).'H'.chr(27).chr(91).'J';
     echo "Current board is:\n";
-    echo $board->toString();
+    echo $board;
   }
 
-  public static function getCoordinateFromInput ($input): array {
-    return explode('-', $input);    
-  }
-
-  public static function checkValidCoordinate ($input)
+  function clearScreen()
   {
-    $input_array=static::getCoordinateFromInput($input);
-    if (count($input_array)==2)
-    {
-      if ($input_array[0]>=0 && $input_array[1]>=0)
-      {
-        if ($input_array[0]<DIMENSIONS && $input_array[1]<DIMENSIONS)
-        {
-          return true;
-        }
-      }
-    }
-    return false;
+    echo chr(27).chr(91).'H'.chr(27).chr(91).'J';
   }
 
 }
