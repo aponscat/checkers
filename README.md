@@ -2,12 +2,6 @@
 Checkers game
 
 Run with:
-php test.php
+php play.php
 
-Avoid simulatin by calling
-$checkers->play();
 
-instead of:
-$checkers->play(true);
-
-In test.php
