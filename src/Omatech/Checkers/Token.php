@@ -30,7 +30,6 @@ class Token {
 
   function getPlayer()
   {
-
     return $this->player;
   }
 

@@ -11,7 +11,7 @@ class Checkers {
     $player1=new Player('x');
     $player2=new Player('o');
     $this->players_array=[$player1, $player2];
-    $this->turn=new Turn($this->players_array);
+    $this->turn=new Turn($this);
 
     $this->board=new Board();
     $this->board->init($this->players_array);
@@ -33,6 +33,11 @@ class Checkers {
     $io->clearScreen();
     echo "The winner is ".$winner->getColor()."\n";
     $io->printBoard($this->board);
+  }
+
+  function getPlayers()
+  {
+    return $this->players_array;
   }
 
   function getPlayerByColor($color): Player
