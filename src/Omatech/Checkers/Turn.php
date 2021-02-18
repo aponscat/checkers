@@ -3,7 +3,6 @@ namespace Omatech\Checkers;
 
 class Turn {
 
-  private $players=array();
   private Checkers $checkers;
   private int $current_player;
 
