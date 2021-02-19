@@ -47,7 +47,7 @@ class Tile {
     {
       return $this->token->getSymbol();
     }
-    return '_';
+    return '-';
   }
 
   function getCoordinates(): string
@@ -61,6 +61,11 @@ class Tile {
     {
       $this->token=null;
     }
+  }
+
+  function isEmpty()
+  {
+    return ($this->getToken()==null);
   }
 
   function setRow(int $row) {

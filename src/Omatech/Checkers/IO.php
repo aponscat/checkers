@@ -29,6 +29,7 @@ class IO {
     $destination_tile=$this->getDestinationTile($player, $source_tile);
     if ($simulate)
     {
+      if ($source_tile->getRow()==$destination_tile->getRow()) die('no mola!');
       echo "\n".$player->getColor()." is moving from ".$source_tile->getCoordinates()." to ".$destination_tile->getCoordinates();
       if ($destination_tile->getToken()!=null)
       {
@@ -45,7 +46,7 @@ class IO {
     $simulate=$player->mustSimulate();
     $possible_sources=$this->board->getAllTilesForPlayer($player);
     echo "\n".$player->getColor()." those are your possible moves:\n";
-    $killer_sources=$normal_sources=[];
+    $valid_sources=$killer_sources=[];
     foreach ($possible_sources as $source) {
       $possible_destination_tiles=$source->getToken()->possibleDestinationTiles();
       if ($possible_destination_tiles)
@@ -53,23 +54,29 @@ class IO {
         foreach ($possible_destination_tiles as $destination)
         {
           echo $source->getCoordinates().' -> '.$destination->getCoordinates();
-          if ($destination->getToken())
-          {
-            echo ' '.$destination->getSymbol();
-            $killer_sources[]=$source;
-          }
-          else
-          {
-            $normal_sources[]=$source;
+          $mov=new Movement($this->board, $source, $destination);
+          if ($mov->isKillerMovement()) {
+              echo " K";
+              $killer_sources[]=$source;
           }
           echo "\n";
+          $valid_sources[]=$source;
         }
       }
     }
 
-    if (array_merge($killer_sources, $normal_sources))
+    if ($valid_sources)
     {
-      $input_source=$this->simulateOrAskForInput('Enter source player '.$player->getColor().' of type '.$player->getType().': ', $killer_sources, $normal_sources, $simulate);
+      if ($killer_sources && $simulate)
+      {
+        shuffle($killer_sources);
+        $input_source=$this->simulateOrAskForInput('Enter source player '.$player->getColor().' of type '.$player->getType().': ', $killer_sources, $simulate);
+      }
+      else
+      {
+        shuffle($valid_sources);
+        $input_source=$this->simulateOrAskForInput('Enter source player '.$player->getColor().' of type '.$player->getType().': ', $valid_sources, $simulate);
+      }
       $source_tile=$this->board->getTileFromInput($input_source);
       return $source_tile;
     }
@@ -79,27 +86,33 @@ class IO {
     }
   }
 
+  function getAIMoves (Tile $source, array $destinations): array
+  {
+    $killer=$normal=[];
+    foreach ($destinations as $destination)
+    {
+      $mov=new Movement($this->board, $source, $destination);
+      if ($mov->isKillerMovement())
+      {
+        $killer[]=$destination;
+      }
+      else
+      {
+        $normal[]=$destination;
+      }
+    }
+    return array_merge($killer, $normal);
+  }
+
   function getDestinationTile(Player $player, Tile $source_tile)
   {
     $simulate=$player->mustSimulate();
     $possible_destinations=$source_tile->getToken()->possibleDestinationTiles();
     if ($possible_destinations)
     {
-      $killer_possibilities=$normal_possibilities=[];
-      foreach ($possible_destinations as $tile)
-      {
-        if($tile->getToken())
-        {
-          $killer_possibilities[]=$tile;
-        }
-        else
-        {
-          $normal_possibilities[]=$tile;
-        }
-      }
-
+      $best_destinations=$this->getAIMoves($source_tile, $possible_destinations);
       $input_destination=$this->simulateOrAskForInput('Enter destination player '.$player->getColor().' of type '.$player->getType().': '
-      , $killer_possibilities, $normal_possibilities, $simulate);
+      , $best_destinations, $simulate);
       $destination_tile=$this->board->getTileFromInput($input_destination);
       return $destination_tile;
     }
@@ -110,30 +123,30 @@ class IO {
   }
 
 
-  function simulateOrAskForInput($message, $killer_possibilities, $normal_possibilities, $simulate=false): string {
+  function simulateOrAskForInput($message, $possibilities, $simulate=false): string {
     if ($simulate)
     {
-      if ($killer_possibilities)
+      if ($possibilities)
       {
-        $tile=$killer_possibilities[array_rand($killer_possibilities)];
+        $tile=$possibilities[array_rand($possibilities)];
+        $input=$tile->getCoordinates();
       }
       else
       {
-        $tile=$normal_possibilities[array_rand($normal_possibilities)];
+        die('no tiene sentido\n');
       }
-      $input=$tile->getCoordinates();
     }
     else
     {
       $input=readline($message); 
     }
 
-    foreach (array_merge($killer_possibilities, $normal_possibilities) as $possibility)
+    foreach ($possibilities as $possibility)
     {
       if ($possibility->getCoordinates()==$input) return $input;
     }
     echo "No es una casilla válida\n";
-    return $this->simulateOrAskForInput($message, $killer_possibilities, $normal_possibilities, $simulate);
+    return $this->simulateOrAskForInput($message, $possibilities, $simulate);
   }
 
   function printBoard(Board $board)

@@ -50,12 +50,16 @@ class Board {
     }
   }
 
-  function getTile ($x, $y): Tile
+  function getTile ($x, $y): ?Tile
   {
-    return $this->tiles[$x][$y];
+    if ($this->checkInBounds($x, $y))
+    {
+      return $this->tiles[$x][$y];
+    }
+    return null;
   }
 
-  function getTileFromInput ($input)
+  function getTileFromInput ($input): ?Tile
   {
     $coord=$this->getCoordinateFromInput($input);
     return $this->getTile($coord[0], $coord[1]);
@@ -85,6 +89,8 @@ class Board {
     if ($token->getPlayer()->getColor()=='o' && $token->getTile()->getRow()==0) return true;
     return false;
   }
+
+
 
 
   public static function getCoordinateFromInput (string $input): array {
