@@ -90,9 +90,6 @@ class Board {
     return false;
   }
 
-
-
-
   public static function getCoordinateFromInput (string $input): array {
     return explode('-', $input);    
   }

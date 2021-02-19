@@ -122,7 +122,6 @@ class IO {
     }
   }
 
-
   function simulateOrAskForInput($message, $possibilities, $simulate=false): string {
     if ($simulate)
     {

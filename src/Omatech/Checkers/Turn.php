@@ -1,6 +1,5 @@
 <?php
 namespace Omatech\Checkers;
-
 class Turn {
 
   private Checkers $checkers;
@@ -24,7 +23,4 @@ class Turn {
       $this->current_player=1;
     }
   }
-
-
-
 }
