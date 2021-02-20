@@ -16,21 +16,30 @@ class Board {
     }
   }
 
-  function getAllTilesForPlayer($player)
-  {
+  function getAllTiles () {
     $ret=[];
     foreach (range(0, DIMENSIONS-1) as $row)
     {
       foreach (range(0, DIMENSIONS-1) as $column)
       {
         $tile=$this->tiles[$row][$column];
-        if ($player->getColor()==$tile->getColor())
-        {
-          $ret[]=$tile;
-        }
+        $ret[]=$tile;
       }
     }  
     return $ret;  
+  }
+
+  function getAllTilesForPlayer($player)
+  {
+    $ret=[];
+    foreach ($this->getAllTiles as $tile)
+    {
+      if ($player->getColor()==$tile->getColor())
+      {
+        $ret[]=$tile;
+      }
+    }
+    return $ret;
   }
 
   function init ($players_array)
@@ -94,7 +103,7 @@ class Board {
     return explode('-', $input);    
   }
 
-  function checkInBounds (int $x, int $y): bool {
+  function checknds (int $x, int $y): bool {
     if ($x>=0 && $y>=0)
     {
       if ($x<DIMENSIONS && $y<DIMENSIONS)
