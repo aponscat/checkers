@@ -103,7 +103,7 @@ class Board {
     return explode('-', $input);    
   }
 
-  function checknds (int $x, int $y): bool {
+  function checkInBounds (int $x, int $y): bool {
     if ($x>=0 && $y>=0)
     {
       if ($x<DIMENSIONS && $y<DIMENSIONS)

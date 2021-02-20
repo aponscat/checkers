@@ -11,6 +11,8 @@ while (!is_file(__DIR__.$autoload_location))
 require_once __DIR__.$autoload_location;
 
 use Omatech\Checkers\Checkers;
+use Omatech\Checkers\Board;
+use Omatech\Checkers\Trajectory;
 
 define ("DIMENSIONS", 8);
 $checkers=new Checkers();

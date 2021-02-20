@@ -40,6 +40,10 @@ class Checkers {
     return $this->players_array;
   }
 
+  function getBoard() {
+    return $this->board;
+  }
+
   function getPlayerByColor($color): Player
   {
     foreach ($this->players_array as $player)

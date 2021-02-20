@@ -14,13 +14,13 @@ class Trajectory {
 
         $this->$x_direction=$x_direction;
         $this->$y_direction=$y_direction;
-        $board=$this->getBoard();
+        $board=$starting_tile->getBoard();
 
         $tile=$starting_tile;
         do {
           $this->ordered_tiles[]=$tile;
           $tile=$board->getTile($tile->getRow()+$x_direction, $tile->getColumn()+$y_direction);
-        } while ($board->checkInBounds($tile->getRow(), $tile->getColumn()))
+        } while ($board->checkInBounds($tile->getRow(), $tile->getColumn()));
     }
 
     function getTiles()
