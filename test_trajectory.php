@@ -11,21 +11,22 @@ while (!is_file(__DIR__.$autoload_location))
 require_once __DIR__.$autoload_location;
 
 use Omatech\Checkers\Checkers;
-use Omatech\Checkers\Board;
 use Omatech\Checkers\Trajectory;
 
 define ("DIMENSIONS", 8);
 $checkers=new Checkers();
 $board=$checkers->getBoard();
 $tiles=$board->getAllTiles();
+echo $board;
 foreach ($tiles as $tile)
 {
+    echo $tile->getRow().'-'.$tile->getColumn()."\n";
     $tr1=new Trajectory($tile, 1, 1);
     $tr2=new Trajectory($tile, 1, -1);
     $tr3=new Trajectory($tile, -1, 1);
     $tr4=new Trajectory($tile, -1, -1);
 
-    echo "Starting Tile:".$tile."\n";
+    echo "Starting Tile:".$tile->getCoordinates()."\n";
     echo "tr1=".$tr1;
     echo "tr2=".$tr2;
     echo "tr3=".$tr3;

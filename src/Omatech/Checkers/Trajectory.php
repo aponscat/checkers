@@ -4,7 +4,8 @@ namespace Omatech\Checkers;
 class Trajectory {
     private int $x_direction;
     private int $y_direction;
-    private array $ordered_tiles;
+    private Tile $starting_tile;
+    private ?array $ordered_tiles=null;
 
     function __construct (Tile $starting_tile, int $x_direction, int $y_direction)
     {
@@ -12,29 +13,48 @@ class Trajectory {
         assert($y_direction>=-1 && $y_direction<=1);
         assert($starting_tile!=null);
 
-        $this->$x_direction=$x_direction;
-        $this->$y_direction=$y_direction;
+        $this->x_direction=$x_direction;
+        $this->y_direction=$y_direction;
+        $this->starting_tile=$starting_tile;
         $board=$starting_tile->getBoard();
 
         $tile=$starting_tile;
         do {
-          $this->ordered_tiles[]=$tile;
-          $tile=$board->getTile($tile->getRow()+$x_direction, $tile->getColumn()+$y_direction);
-        } while ($board->checkInBounds($tile->getRow(), $tile->getColumn()));
+            $tile=$board->getTile($tile->getRow()+$x_direction, $tile->getColumn()+$y_direction);
+            if ($tile) $this->ordered_tiles[]=$tile;
+        } while ($tile);
     }
 
-    function getTiles()
+    function getTiles($offset=0)
     {
-        return $this->ordered_tiles;
+        $ret=[];
+        foreach ($this->ordered_tiles as $key=>$tile)
+        {
+            if ($key>=$offset)
+            {
+                $ret[]=$tile;
+            }
+        }
+        return $ret;
+    }
+
+    function exists()
+    {
+        return ($this->ordered_tiles!=null);
     }
 
     function __toString()
     {
-        $ret="Direction=".$this->x_direction.' '.$this->y_direction.":";
-        foreach ($this->ordered_tiles as $tile)
+        $ret="StartingTile:".$this->starting_tile->getCoordinates()." ";
+        $ret.="Direction=".$this->x_direction.' '.$this->y_direction.":";
+        if ($this->exists())
         {
-            $ret.=$tile;
+            foreach ($this->ordered_tiles as $tile)
+            {
+                $ret.="(".$tile->getCoordinates()."),";
+            }    
         }
+        $ret.="\n";
         return $ret;
     }
 }

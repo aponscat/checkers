@@ -73,6 +73,8 @@ class Token {
     return ($this->isQueen);
   }
 
+  /*
+
   function tryMove ($row_offset, $column_offset): ?Tile {
     $current_row=$this->getTile()->getRow();
     $current_column=$this->getTile()->getColumn();
@@ -106,29 +108,60 @@ class Token {
     }
     return null;
   }
+*/
+  function getAllTrajectories(): array
+  {
+    $trajectories=[];
+    $trajectories[]=new Trajectory($this->getTile(), $this->row_direction, 1);
+    $trajectories[]=new Trajectory($this->getTile(), $this->row_direction, -1);
+
+    if ($this->isQueen)
+    {
+      $trajectories[]=new Trajectory($this->getTile(), $this->row_direction*-1, 1);
+      $trajectories[]=new Trajectory($this->getTile(), $this->row_direction*-1, -1);
+    }
+    return $trajectories;
+  }
+
+  function getValidTileInTrajectory ($trajectory, $offset=0)
+  {
+    $valids=[];
+    
+    $tiles=$trajectory->getTiles($offset);
+    if ($tiles && isset($tiles[$offset])) {
+        if ($tiles[$offset]->isEmpty()) {
+            $valids[]=$tiles[$offset];
+            $valids=array_merge($valids, $this->getValidTileInTrajectory($trajectory, $offset+1));
+        } else {
+            if ($tiles[$offset]->getToken()
+            && $tiles[$offset]->getToken()->getColor()!=$this->getColor()
+            && isset($tiles[$offset+1])
+            && $tiles[$offset+1]->isEmpty()
+            ) {
+                $valids[]=$tiles[$offset+1];
+                $valids=array_merge($valids, $this->getValidTileInTrajectory($trajectory, $offset+2));
+            }
+        }
+    }
+
+    return $valids;
+  }
 
   function possibleDestinationTiles (): array
   {
+    $trajectories=$this->getAllTrajectories();
     $destinations=[];
-
-    if ($this->isQueen())
-    {
-      $i=-DIMENSIONS;
-      do {
-        $dest=$this->tryMove($i, $i);
-        if ($dest) $destinations[]=$dest;
-        
-        $i++;
-      } while ($i<$this->maxMovement);
-    }
-    else
-    {
-      $dest=$this->tryMove(1, +1);
-      if ($dest) $destinations[]=$dest;
-  
-      $dest=$this->tryMove(1, -1);
-      if ($dest) $destinations[]=$dest;  
-    }
+    $i=0;
+    do {
+      foreach ($trajectories as $trajectory)
+      {
+        if ($trajectory->exists())
+        {
+          $destinations=array_merge($destinations, $this->getValidTileInTrajectory ($trajectory));
+        }
+      }
+      $i++;
+    } while ($i<$this->maxMovement);
 
     return $destinations;
   }

@@ -32,7 +32,7 @@ class Board {
   function getAllTilesForPlayer($player)
   {
     $ret=[];
-    foreach ($this->getAllTiles as $tile)
+    foreach ($this->getAllTiles() as $tile)
     {
       if ($player->getColor()==$tile->getColor())
       {
@@ -42,18 +42,21 @@ class Board {
     return $ret;
   }
 
-  function init ($players_array)
+  function init ($players_array=null)
   {
     foreach (range(0, DIMENSIONS-1) as $row)
     {
       foreach (range(0, DIMENSIONS-1) as $column)
       {
         $tile=$this->tiles[$row][$column];
-        $player=$this->getStartingPlayer($players_array, $row, $column);
-        if ($player)
+        if ($players_array)
         {
-          $token=new Token($player, $tile);
-          $tile->setToken($token);
+          $player=$this->getStartingPlayer($players_array, $row, $column);
+          if ($player)
+          {
+            $token=new Token($player, $tile);
+            $tile->setToken($token);
+          }  
         }
       }
     }
