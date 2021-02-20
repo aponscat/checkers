@@ -65,7 +65,6 @@ class Token {
     $this->maxMovement=DIMENSIONS-2;
     $this->symbol=strtoupper($this->symbol);
     $this->isQueen=true;
-    //$this->row_direction=$this->row_direction*-1;
   }
 
   function isQueen(): bool
@@ -73,42 +72,6 @@ class Token {
     return ($this->isQueen);
   }
 
-  /*
-
-  function tryMove ($row_offset, $column_offset): ?Tile {
-    $current_row=$this->getTile()->getRow();
-    $current_column=$this->getTile()->getColumn();
-
-    $next_row=$this->getNextRow($row_offset);
-    $next_column=$this->getTile()->getColumn()+$column_offset;
-    
-    //echo "Token in $current_row-$current_column trying to move with offset $row_offset-$column_offset to $next_row-$next_column\n";
-
-    if ($this->tile->getBoard()->checkInBounds($next_row, $next_column))
-    {
-      $destination_tile=$this->getTile()->getBoard()->getTile($next_row, $next_column);
-      if ($destination_tile->isEmpty())
-      {
-        return $destination_tile;
-      }
-      else
-      {// o está ocupada por mi o por el otro jugador
-        if ($destination_tile->getColor()!=$this->getColor())
-        {// es el enemigo, tratamos de matarlo
-          if ($this->tile->getBoard()->checkInBounds($this->getNextRow($row_offset+1), $next_column+$column_offset))
-          {
-            $destination_tile=$this->getTile()->getBoard()->getTile($this->getNextRow($row_offset+1), $next_column+$column_offset);
-            if ($destination_tile->isEmpty())
-            {
-              return $destination_tile;
-            }  
-          }
-        }
-      }
-    }
-    return null;
-  }
-*/
   function getAllTrajectories(): array
   {
     $trajectories=[];
@@ -143,7 +106,6 @@ class Token {
             }
         }
     }
-
     return $valids;
   }
 
@@ -165,5 +127,4 @@ class Token {
 
     return $destinations;
   }
-
 }
