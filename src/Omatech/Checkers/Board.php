@@ -16,7 +16,7 @@ class Board {
     }
   }
 
-  function getAllTiles () {
+  function getAllTiles (): array {
     $ret=[];
     foreach (range(0, DIMENSIONS-1) as $row)
     {
@@ -29,7 +29,7 @@ class Board {
     return $ret;  
   }
 
-  function getAllTilesForPlayer($player)
+  function getAllTilesForPlayer($player): array
   {
     $ret=[];
     foreach ($this->getAllTiles() as $tile)
@@ -42,7 +42,7 @@ class Board {
     return $ret;
   }
 
-  function init ($players_array=null)
+  function init ($players_array=null): void
   {
     foreach (range(0, DIMENSIONS-1) as $row)
     {

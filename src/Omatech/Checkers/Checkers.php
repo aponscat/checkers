@@ -13,7 +13,7 @@ class Checkers {
     $this->io=new IO();
   }
 
-  function play() {
+  function play(): void {
     
     $player1=$this->initPlayer('x');
     $player2=$this->initPlayer('o');
@@ -52,16 +52,16 @@ class Checkers {
     return new ComputerPlayer($this, $color);
   }
 
-  function getPlayers()
+  function getPlayers(): array
   {
     return $this->players_array;
   }
 
-  function getBoard() {
+  function getBoard(): Board {
     return $this->board;
   }
 
-  function getIO() {
+  function getIO(): IO {
     return $this->io;
   }
 

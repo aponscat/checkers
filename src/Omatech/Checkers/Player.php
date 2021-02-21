@@ -61,8 +61,4 @@ abstract class Player {
   abstract function askForValidMovement(): Movement;
   abstract function getSourceChoice (array $valid_sources, ?array $killer_sources=[]): Tile;
   abstract function getDestinationChoice (Tile $source_tile): Tile;
-
-
-
-
 }

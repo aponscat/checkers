@@ -70,7 +70,7 @@ class Movement {
     return $tiles;
   }
 
-  function isKillerMovement()
+  function isKillerMovement(): bool
   {
     foreach ($this->getAllTilesInTrajectory() as $tile)
     {

@@ -25,7 +25,7 @@ class Trajectory {
         } while ($tile);
     }
 
-    function getTiles($offset=0)
+    function getTiles($offset=0): array
     {
         $ret=[];
         foreach ($this->ordered_tiles as $key=>$tile)
@@ -38,12 +38,12 @@ class Trajectory {
         return $ret;
     }
 
-    function exists()
+    function exists(): bool
     {
         return ($this->ordered_tiles!=null);
     }
 
-    function __toString()
+    function __toString(): string
     {
         $ret="StartingTile:".$this->starting_tile->getCoordinates()." ";
         $ret.="Direction=".$this->x_direction.' '.$this->y_direction.":";

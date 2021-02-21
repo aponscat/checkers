@@ -16,11 +16,11 @@ class Tile {
     $this->board=$board;
   }
 
-  function getBoard() {
+  function getBoard(): Board {
     return $this->board;
   }
 
-  function setToken(Token $token) {
+  function setToken(Token $token): void {
     $this->token=$token;
   }
 
@@ -55,7 +55,7 @@ class Tile {
     return $this->getRow().'-'.$this->getColumn();
   }
 
-  function removeToken()
+  function removeToken(): void
   {
     if (isset($this->token))
     {
@@ -63,12 +63,12 @@ class Tile {
     }
   }
 
-  function isEmpty()
+  function isEmpty(): bool
   {
     return ($this->getToken()==null);
   }
 
-  function setRow(int $row) {
+  function setRow(int $row): void {
     $this->row=$row;
   }
 
@@ -77,7 +77,7 @@ class Tile {
     return $this->row;
   }
 
-  function setColumn(int $column) {
+  function setColumn(int $column): void {
     $this->column=$column;
   }
 

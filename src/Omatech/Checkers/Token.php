@@ -23,12 +23,12 @@ class Token {
     }
   }
 
-  function getTile()
+  function getTile(): Tile
   {
     return $this->tile;
   }
 
-  function getPlayer()
+  function getPlayer(): Player
   {
     return $this->player;
   }
@@ -38,24 +38,24 @@ class Token {
     return $this->getTile()->getRow()+($this->getRowOffset($offset));
   }
 
-  function getRowOffset($offset)
+  function getRowOffset($offset): int
   {
     return $offset*$this->row_direction;
   }
 
-  function getColor()
+  function getColor(): string
   {
     return $this->getPlayer()->getColor();
   }
 
-  function moveTo(Tile $tile)
+  function moveTo(Tile $tile): void
   {
     $this->tile->removeToken();
     $this->tile=$tile;
     $this->tile->setToken($this);
   }
 
-  function getSymbol()
+  function getSymbol(): string
   {
     return $this->symbol;
   }
@@ -86,7 +86,7 @@ class Token {
     return $trajectories;
   }
 
-  function getValidTileInTrajectory ($trajectory, $offset=0)
+  function getValidTilesInTrajectory (Trajectory $trajectory, $offset=0): array
   {
     $valids=[];
     
@@ -94,7 +94,7 @@ class Token {
     if ($tiles && isset($tiles[$offset])) {
         if ($tiles[$offset]->isEmpty()) {
             $valids[]=$tiles[$offset];
-            $valids=array_merge($valids, $this->getValidTileInTrajectory($trajectory, $offset+1));
+            $valids=array_merge($valids, $this->getValidTilesInTrajectory($trajectory, $offset+1));
         } else {
             if ($tiles[$offset]->getToken()
             && $tiles[$offset]->getToken()->getColor()!=$this->getColor()
@@ -102,7 +102,7 @@ class Token {
             && $tiles[$offset+1]->isEmpty()
             ) {
                 $valids[]=$tiles[$offset+1];
-                $valids=array_merge($valids, $this->getValidTileInTrajectory($trajectory, $offset+2));
+                $valids=array_merge($valids, $this->getValidTilesInTrajectory($trajectory, $offset+2));
             }
         }
     }
@@ -119,7 +119,7 @@ class Token {
       {
         if ($trajectory->exists())
         {
-          $destinations=array_merge($destinations, $this->getValidTileInTrajectory ($trajectory));
+          $destinations=array_merge($destinations, $this->getValidTilesInTrajectory ($trajectory));
         }
       }
       $i++;

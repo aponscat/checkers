@@ -22,13 +22,13 @@ class IO {
     return readline($message);
   }
 
-  function printBoard(Board $board)
+  function printBoard(Board $board): void
   {
     echo "Current board is:\n";
     echo $board;
   }
 
-  function clearScreen()
+  function clearScreen(): void
   {
     echo chr(27).chr(91).'H'.chr(27).chr(91).'J';
   }
