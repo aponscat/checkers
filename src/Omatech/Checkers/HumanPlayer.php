@@ -42,7 +42,8 @@ class HumanPlayer extends Player {
 
   function AskForInput($message, $possibilities): string {
     assert ($possibilities);
-    $input=readline($message); 
+    $io=$this->getIO();
+    $input=$io->getInput($message);
     foreach ($possibilities as $possibility)
     {
       if ($possibility->getCoordinates()==$input) return $input;

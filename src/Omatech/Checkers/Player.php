@@ -54,6 +54,10 @@ abstract class Player {
     return $this->checkers->getBoard();
   }
 
+  function getIO (): IO {
+    return $this->checkers->getIO();
+  }
+
   abstract function askForValidMovement(): Movement;
   abstract function getSourceChoice (?array $killer_sources, array $valid_sources): Tile;
   abstract function getDestinationChoice (Tile $source_tile): Tile;

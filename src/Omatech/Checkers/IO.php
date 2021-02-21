@@ -11,7 +11,7 @@ class IO {
   {
     $valid=false;
     do {
-      $input=readline("Select Human or Computer for player $color [C|h]:");
+      $input=$this->getInput("Select Human or Computer for player $color [C|h]:");
       if ($input==='') $input='c';
       $input=strtolower($input);
       if ($input=='c' || $input=='h') $valid=true;
@@ -19,6 +19,9 @@ class IO {
     return $input;
   }
 
+  function getInput (string $message): string {
+    return readline($message);
+  }
 
   function printBoard(Board $board)
   {

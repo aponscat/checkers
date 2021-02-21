@@ -5,21 +5,23 @@ class Checkers {
   private Board $board;
   private Turn $turn;
   private array $players_array;
+  private IO $io;
 
   function __construct()
   {
     $this->board=new Board();
+    $this->io=new IO($this->board);
   }
 
   function play() {
-    $io=new IO($this->board);
+    
 
     $color='x';
-    $type=$io->askForTypeOfPlayer($color);
+    $type=$this->io->askForTypeOfPlayer($color);
     $player1=$this->createPlayer($color, $type);
 
     $color='o';
-    $type=$io->askForTypeOfPlayer($color);
+    $type=$this->io->askForTypeOfPlayer($color);
     $player2=$this->createPlayer($color, $type);
 
     $this->players_array=[$player1, $player2];
@@ -27,17 +29,17 @@ class Checkers {
     $this->board->init($this->players_array);
 
     do {
-      $io->clearScreen();
-      $io->printBoard($this->board);
+      $this->io->clearScreen();
+      $this->io->printBoard($this->board);
       $movement=$this->turn->getCurrentPlayer()->askForValidMovement();
       $movement->do();
       $winner=$this->board->getWinner($this);
       if (!$winner) $this->turn->nextPlayer();
     } while (!$winner);
 
-    $io->clearScreen();
+    $this->io->clearScreen();
     echo "The winner is ".$winner->getColor()."\n";
-    $io->printBoard($this->board);
+    $this->io->printBoard($this->board);
   }
 
   function createPlayer (string $color, string $type): Player
@@ -56,6 +58,10 @@ class Checkers {
 
   function getBoard() {
     return $this->board;
+  }
+
+  function getIO() {
+    return $this->io;
   }
 
   function getPlayerByColor($color): Player
