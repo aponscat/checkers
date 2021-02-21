@@ -41,7 +41,7 @@ abstract class Player {
 
     if ($valid_sources)
     {
-      return $this->getSourceChoice($killer_sources, $valid_sources);
+      return $this->getSourceChoice($valid_sources, $killer_sources);
     }
     else
     {
@@ -59,7 +59,7 @@ abstract class Player {
   }
 
   abstract function askForValidMovement(): Movement;
-  abstract function getSourceChoice (?array $killer_sources, array $valid_sources): Tile;
+  abstract function getSourceChoice (array $valid_sources, ?array $killer_sources=[]): Tile;
   abstract function getDestinationChoice (Tile $source_tile): Tile;
 
 

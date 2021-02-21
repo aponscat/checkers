@@ -10,19 +10,13 @@ class Checkers {
   function __construct()
   {
     $this->board=new Board();
-    $this->io=new IO($this->board);
+    $this->io=new IO();
   }
 
   function play() {
     
-
-    $color='x';
-    $type=$this->io->askForTypeOfPlayer($color);
-    $player1=$this->createPlayer($color, $type);
-
-    $color='o';
-    $type=$this->io->askForTypeOfPlayer($color);
-    $player2=$this->createPlayer($color, $type);
+    $player1=$this->initPlayer('x');
+    $player2=$this->initPlayer('o');
 
     $this->players_array=[$player1, $player2];
     $this->turn=new Turn($this);
@@ -40,6 +34,13 @@ class Checkers {
     $this->io->clearScreen();
     echo "The winner is ".$winner->getColor()."\n";
     $this->io->printBoard($this->board);
+  }
+
+  function initPlayer (string $color): Player
+  {
+    $type=$this->io->askForTypeOfPlayer($color);
+    $player=$this->createPlayer($color, $type);
+    return $player;
   }
 
   function createPlayer (string $color, string $type): Player

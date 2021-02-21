@@ -3,8 +3,7 @@ namespace Omatech\Checkers;
 
 class IO {
 
-  function __construct (Board $board) {
-    $this->board=$board;
+  function __construct () {
   }
 
   function askForTypeOfPlayer(string $color): string

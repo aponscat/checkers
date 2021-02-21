@@ -17,7 +17,7 @@ class HumanPlayer extends Player {
     return new Movement($this->getBoard(), $source_tile, $destination_tile);
   }
 
-  function getSourceChoice (?array $killer_sources, array $valid_sources): Tile
+  function getSourceChoice (array $valid_sources, ?array $killer_sources=[]): Tile
   {
     $input_source=$this->AskForInput('Player with color '.$this->getColor().', please enter a valid source tile: ', $valid_sources);
     $source_tile=$this->getBoard()->getTileFromInput($input_source);

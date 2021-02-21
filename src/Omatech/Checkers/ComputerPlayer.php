@@ -35,7 +35,7 @@ class ComputerPlayer extends Player {
     return new Movement($this->getBoard(), $source_tile, $destination_tile);
   }
 
-  function getSourceChoice (?array $killer_sources, array $valid_sources): Tile
+  function getSourceChoice (array $valid_sources, ?array $killer_sources=[]): Tile
   {
     if ($killer_sources)
     {
