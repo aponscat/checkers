@@ -29,7 +29,7 @@ class HumanPlayer extends Player {
     $possible_destinations=$source_tile->getToken()->possibleDestinationTiles();
     if ($possible_destinations)
     {
-      $input_destination=$this->AskForInput('Player with color '.$this->getColor().', please, enter a valid destination:'
+      $input_destination=$this->AskForInput('Player with color '.$this->getColor().', please, enter a valid destination: '
       , $possible_destinations);
       $destination_tile=$this->getBoard()->getTileFromInput($input_destination);
       return $destination_tile;

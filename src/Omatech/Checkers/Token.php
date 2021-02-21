@@ -78,7 +78,7 @@ class Token {
     $trajectories[]=new Trajectory($this->getTile(), $this->row_direction, 1);
     $trajectories[]=new Trajectory($this->getTile(), $this->row_direction, -1);
 
-    if ($this->isQueen)
+    if ($this->isQueen())
     {
       $trajectories[]=new Trajectory($this->getTile(), $this->row_direction*-1, 1);
       $trajectories[]=new Trajectory($this->getTile(), $this->row_direction*-1, -1);
@@ -94,7 +94,10 @@ class Token {
     if ($tiles && isset($tiles[$offset])) {
         if ($tiles[$offset]->isEmpty()) {
             $valids[]=$tiles[$offset];
-            $valids=array_merge($valids, $this->getValidTilesInTrajectory($trajectory, $offset+1));
+            if ($this->isQueen())
+            {// recursive call if it's queen
+              $valids=array_merge($valids, $this->getValidTilesInTrajectory($trajectory, $offset+1));
+            }
         } else {
             if ($tiles[$offset]->getToken()
             && $tiles[$offset]->getToken()->getColor()!=$this->getColor()
@@ -102,7 +105,10 @@ class Token {
             && $tiles[$offset+1]->isEmpty()
             ) {
                 $valids[]=$tiles[$offset+1];
-                $valids=array_merge($valids, $this->getValidTilesInTrajectory($trajectory, $offset+2));
+                if ($this->isQueen())
+                {// recursive call if it's queen
+                    $valids=array_merge($valids, $this->getValidTilesInTrajectory($trajectory, $offset+2));
+                }
             }
         }
     }
@@ -113,17 +119,14 @@ class Token {
   {
     $trajectories=$this->getAllTrajectories();
     $destinations=[];
-    $i=0;
-    do {
+
       foreach ($trajectories as $trajectory)
       {
         if ($trajectory->exists())
         {
-          $destinations=array_merge($destinations, $this->getValidTilesInTrajectory ($trajectory));
+          $destinations=array_merge($destinations, $this->getValidTilesInTrajectory($trajectory));
         }
       }
-      $i++;
-    } while ($i<$this->maxMovement);
 
     return $destinations;
   }
