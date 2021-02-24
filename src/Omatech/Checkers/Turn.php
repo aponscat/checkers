@@ -2,25 +2,24 @@
 namespace Omatech\Checkers;
 class Turn {
 
-  private Checkers $checkers;
+  private array $players;
   private int $current_player;
 
-  function __construct($checkers)
+  function __construct($players)
   {
-    $this->checkers=$checkers;
-    $this->current_player=1;
+    $this->players=$players;
+    $this->current_player=0;
   }
 
   function getCurrentPlayer(): Player {
-    return $this->checkers->getPlayers()[$this->current_player];
+    return $this->players[$this->current_player];
   }
 
   function nextPlayer(): void {
-    if ($this->current_player) {
+    $this->current_player++;
+    if (!isset($this->players[$this->current_player])) 
+    {
         $this->current_player=0;
-    }
-    else {
-      $this->current_player=1;
     }
   }
 }

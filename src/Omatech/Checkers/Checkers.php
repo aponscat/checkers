@@ -15,11 +15,11 @@ class Checkers {
 
   function play(): void {
     
-    $player1=$this->initPlayer('x');
-    $player2=$this->initPlayer('o');
+    $player1=$this->initPlayer('o');
+    $player2=$this->initPlayer('x');
 
     $this->players_array=[$player1, $player2];
-    $this->turn=new Turn($this);
+    $this->turn=new Turn($this->players_array);
     $this->board->init($this->players_array);
 
     do {
@@ -39,17 +39,8 @@ class Checkers {
   function initPlayer (string $color): Player
   {
     $type=$this->io->askForTypeOfPlayer($color);
-    $player=$this->createPlayer($color, $type);
+    $player=Player::createPlayer($this->board, $color, $type);
     return $player;
-  }
-
-  function createPlayer (string $color, string $type): Player
-  {
-    if ($type=='h')
-    {
-      return new HumanPlayer($this, $color);
-    }
-    return new ComputerPlayer($this, $color);
   }
 
   function getPlayers(): array

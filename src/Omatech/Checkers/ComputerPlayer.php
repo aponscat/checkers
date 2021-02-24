@@ -8,7 +8,7 @@ class ComputerPlayer extends Player {
     $killer=$normal=[];
     foreach ($destinations as $destination)
     {
-      $mov=new Movement($this->getBoard(), $source, $destination);
+      $mov=new Movement($source, $destination);
       if ($mov->isKillerMovement())
       {
         $killer[]=$destination;
@@ -32,7 +32,7 @@ class ComputerPlayer extends Player {
     }
     echo "\n";
     sleep(1);
-    return new Movement($this->getBoard(), $source_tile, $destination_tile);
+    return new Movement($source_tile, $destination_tile);
   }
 
   function getSourceChoice (array $valid_sources, ?array $killer_sources=[]): Tile

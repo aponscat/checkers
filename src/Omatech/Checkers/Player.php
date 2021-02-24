@@ -4,13 +4,23 @@ namespace Omatech\Checkers;
 abstract class Player {
 
   private string $color;
-  private Checkers $checkers;
+  private Board $board;
 
-  function __construct($checkers, $color)
+  function __construct($board, $color)
   {
-    $this->checkers=$checkers;
+    $this->board=$board;
     $this->color=$color;
   }
+
+  static function createPlayer (Board $board, string $color, string $type): Player
+  {
+    if ($type=='h')
+    {
+      return new HumanPlayer($board, $color);
+    }
+    return new ComputerPlayer($board, $color);
+  }
+
 
   public function getColor(): string {
     return strtolower($this->color);
@@ -18,7 +28,7 @@ abstract class Player {
 
   public function getSourceTile(): Tile
   {
-    $possible_sources=$this->getBoard()->getAllTilesForPlayer($this);
+    $possible_sources=$this->board->getAllTilesForPlayer($this);
     echo "\n".$this->getColor()." those are your possible moves:\n";
     $valid_sources=$killer_sources=[];
     foreach ($possible_sources as $source) {
@@ -28,7 +38,7 @@ abstract class Player {
         foreach ($possible_destination_tiles as $destination)
         {
           echo $source->getCoordinates().' -> '.$destination->getCoordinates();
-          $mov=new Movement($this->getBoard(), $source, $destination);
+          $mov=new Movement($source, $destination);
           if ($mov->isKillerMovement()) {
               echo " K";
               $killer_sources[]=$source;
@@ -51,7 +61,7 @@ abstract class Player {
   
   function getBoard(): Board
   {
-    return $this->checkers->getBoard();
+    return $this->board;
   }
 
   function getIO (): IO {

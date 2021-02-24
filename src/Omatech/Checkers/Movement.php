@@ -2,13 +2,11 @@
 namespace Omatech\Checkers;
 
 class Movement {
-  private Board $board;
   private Tile $source;
   private Tile $destination;
 
-  function __construct(Board $board, Tile $source, Tile $destination)
+  function __construct(Tile $source, Tile $destination)
   {
-    $this->board=$board;
     $this->source=$source;
     $this->destination=$destination;
   }
@@ -47,6 +45,7 @@ class Movement {
   function getAllTilesInTrajectory(): array {
     $source_tile=$this->getSource();
     $destination_tile=$this->getDestination();
+    $board=$source_tile->getBoard();
 
     $x=$source_tile->getRow();
     $y=$source_tile->getColumn();
@@ -63,7 +62,7 @@ class Movement {
       $x=$x+$rows_offset;
       $y=$y+$columns_offset;
       //echo "$x-$y,";
-      $next_tile=$this->board->getTile($x, $y);
+      $next_tile=$board->getTile($x, $y);
       $tiles[]=$next_tile;
     } while ($x<$dest_x || $y<$dest_y);
     //echo "\n";
@@ -87,6 +86,7 @@ class Movement {
     $source_tile=$this->getSource();
     $destination_tile=$this->getDestination();
     $token=$source_tile->getToken();
+    $board=$source_tile->getBoard();
 
     foreach ($this->getAllTilesInTrajectory() as $tile)
     {
@@ -94,7 +94,7 @@ class Movement {
     }
 
     $token->moveTo($destination_tile);
-    if ($this->board->tokenReachedGoal ($token))
+    if ($board->tokenReachedGoal ($token))
     {
       $token->convertToQueen();
     }

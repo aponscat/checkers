@@ -144,14 +144,14 @@ class Board {
     {
       if ($column%2!=$row%2)
       {
-        return $players_array[0];
+        return $players_array[1];
       }
     }
     if (in_array($row, range(DIMENSIONS-3, DIMENSIONS-1)))
     {
       if ($column%2!=$row%2)
       {
-        return $players_array[1];
+        return $players_array[0];
       }  
     }
     return null;

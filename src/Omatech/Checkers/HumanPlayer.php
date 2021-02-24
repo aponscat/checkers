@@ -14,7 +14,7 @@ class HumanPlayer extends Player {
     }
     echo "\n";
     sleep(1);
-    return new Movement($this->getBoard(), $source_tile, $destination_tile);
+    return new Movement($source_tile, $destination_tile);
   }
 
   function getSourceChoice (array $valid_sources, ?array $killer_sources=[]): Tile
