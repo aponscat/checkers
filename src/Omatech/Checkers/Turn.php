@@ -5,7 +5,7 @@ class Turn {
   private array $players;
   private int $current_player;
 
-  function __construct($players)
+  function __construct(array $players)
   {
     $this->players=$players;
     $this->current_player=0;
@@ -15,7 +15,7 @@ class Turn {
     return $this->players[$this->current_player];
   }
 
-  function nextPlayer(): void {
+  function changeToNextPlayer(): void {
     $this->current_player++;
     if (!isset($this->players[$this->current_player])) 
     {

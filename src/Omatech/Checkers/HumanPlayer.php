@@ -19,7 +19,7 @@ class HumanPlayer extends Player {
 
   function getSourceChoice (array $valid_sources, ?array $killer_sources=[]): Tile
   {
-    $input_source=$this->AskForInput('Player with color '.$this->getColor().', please enter a valid source tile: ', $valid_sources);
+    $input_source=$this->askForInput('Player with color '.$this->getColor().', please enter a valid source tile: ', $valid_sources);
     $source_tile=$this->getBoard()->getTileFromInput($input_source);
     return $source_tile;
   }
@@ -29,7 +29,7 @@ class HumanPlayer extends Player {
     $possible_destinations=$source_tile->getToken()->possibleDestinationTiles();
     if ($possible_destinations)
     {
-      $input_destination=$this->AskForInput('Player with color '.$this->getColor().', please, enter a valid destination: '
+      $input_destination=$this->askForInput('Player with color '.$this->getColor().', please, enter a valid destination: '
       , $possible_destinations);
       $destination_tile=$this->getBoard()->getTileFromInput($input_destination);
       return $destination_tile;
@@ -40,7 +40,7 @@ class HumanPlayer extends Player {
     }
   }
 
-  function AskForInput($message, $possibilities): string {
+  private function askForInput(string $message, array $possibilities): string {
     assert ($possibilities);
     $io=$this->getIO();
     $input=$io->getInput($message);
@@ -49,7 +49,7 @@ class HumanPlayer extends Player {
       if ($possibility->getCoordinates()==$input) return $input;
     }
     echo "No es una casilla válida\n";
-    return $this->AskForInput($message, $possibilities);
+    return $this->askForInput($message, $possibilities);
   }
 
 }

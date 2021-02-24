@@ -25,7 +25,7 @@ class Trajectory {
         } while ($tile);
     }
 
-    function getTiles($offset=0): array
+    function getTiles(int $offset=0): array
     {
         $ret=[];
         foreach ($this->ordered_tiles as $key=>$tile)

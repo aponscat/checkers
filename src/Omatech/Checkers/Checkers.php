@@ -28,7 +28,7 @@ class Checkers {
       $movement=$this->turn->getCurrentPlayer()->askForValidMovement();
       $movement->do();
       $winner=$this->board->getWinner($this);
-      if (!$winner) $this->turn->nextPlayer();
+      if (!$winner) $this->turn->changeToNextPlayer();
     } while (!$winner);
 
     $this->io->clearScreen();
@@ -56,7 +56,7 @@ class Checkers {
     return $this->io;
   }
 
-  function getPlayerByColor($color): Player
+  function getPlayerByColor(string $color): Player
   {
     foreach ($this->players_array as $player)
     {

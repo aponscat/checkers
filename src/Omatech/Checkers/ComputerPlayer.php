@@ -3,23 +3,6 @@ namespace Omatech\Checkers;
 
 class ComputerPlayer extends Player {
 
-  function getAIMoves (Tile $source, array $destinations): array
-  {
-    $killer=$normal=[];
-    foreach ($destinations as $destination)
-    {
-      $mov=new Movement($source, $destination);
-      if ($mov->isKillerMovement())
-      {
-        $killer[]=$destination;
-      }
-      else
-      {
-        $normal[]=$destination;
-      }
-    }
-    return array_merge($killer, $normal);
-  }
 
   function askForValidMovement(): Movement {
     $source_tile=$this->getSourceTile();
@@ -40,12 +23,12 @@ class ComputerPlayer extends Player {
     if ($killer_sources)
     {
       shuffle($killer_sources);
-      $input_source=$this->AskForInput('Computer player with color '.$this->getColor().' selecting source: ', $killer_sources);
+      $input_source=$this->askForInput('Computer player with color '.$this->getColor().' selecting source: ', $killer_sources);
     }
     else
     {
       shuffle($valid_sources);
-      $input_source=$this->AskForInput('Computer player with color '.$this->getColor().' selecting source: ', $valid_sources);
+      $input_source=$this->askForInput('Computer player with color '.$this->getColor().' selecting source: ', $valid_sources);
     }
     $source_tile=$this->getBoard()->getTileFromInput($input_source);
     return $source_tile;
@@ -57,7 +40,7 @@ class ComputerPlayer extends Player {
     if ($possible_destinations)
     {
       $best_destinations=$this->getAIMoves($source_tile, $possible_destinations);
-      $input_destination=$this->AskForInput('Computer player with color '.$this->getColor().' selecting destination:'
+      $input_destination=$this->askForInput('Computer player with color '.$this->getColor().' selecting destination:'
       , $best_destinations);
       $destination_tile=$this->getBoard()->getTileFromInput($input_destination);
       return $destination_tile;
@@ -68,7 +51,25 @@ class ComputerPlayer extends Player {
     }
   }
 
-  function AskForInput($message, $possibilities): string {
+  private function getAIMoves (Tile $source, array $destinations): array
+  {
+    $killer=$normal=[];
+    foreach ($destinations as $destination)
+    {
+      $mov=new Movement($source, $destination);
+      if ($mov->isKillerMovement())
+      {
+        $killer[]=$destination;
+      }
+      else
+      {
+        $normal[]=$destination;
+      }
+    }
+    return array_merge($killer, $normal);
+  }
+
+  private function askForInput(string $message, array $possibilities): string {
     assert ($possibilities);
     $tile=$possibilities[array_rand($possibilities)];
     $input=$tile->getCoordinates();
@@ -78,7 +79,7 @@ class ComputerPlayer extends Player {
       if ($possibility->getCoordinates()==$input) return $input;
     }
     echo "No es una casilla válida\n";
-    return $this->AskForInput($message, $possibilities);
+    return $this->askForInput($message, $possibilities);
   }
 
 

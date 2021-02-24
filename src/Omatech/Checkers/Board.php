@@ -16,33 +16,7 @@ class Board {
     }
   }
 
-  function getAllTiles (): array {
-    $ret=[];
-    foreach (range(0, DIMENSIONS-1) as $row)
-    {
-      foreach (range(0, DIMENSIONS-1) as $column)
-      {
-        $tile=$this->tiles[$row][$column];
-        $ret[]=$tile;
-      }
-    }  
-    return $ret;  
-  }
-
-  function getAllTilesForPlayer($player): array
-  {
-    $ret=[];
-    foreach ($this->getAllTiles() as $tile)
-    {
-      if ($player->getColor()==$tile->getColor())
-      {
-        $ret[]=$tile;
-      }
-    }
-    return $ret;
-  }
-
-  function init ($players_array=null): void
+  function init(array $players_array=null): void
   {
     foreach (range(0, DIMENSIONS-1) as $row)
     {
@@ -62,7 +36,33 @@ class Board {
     }
   }
 
-  function getTile ($x, $y): ?Tile
+  function getAllTiles(): array {
+    $ret=[];
+    foreach (range(0, DIMENSIONS-1) as $row)
+    {
+      foreach (range(0, DIMENSIONS-1) as $column)
+      {
+        $tile=$this->tiles[$row][$column];
+        $ret[]=$tile;
+      }
+    }  
+    return $ret;  
+  }
+
+  function getAllTilesForPlayer(Player $player): array
+  {
+    $ret=[];
+    foreach ($this->getAllTiles() as $tile)
+    {
+      if ($player->getColor()==$tile->getColor())
+      {
+        $ret[]=$tile;
+      }
+    }
+    return $ret;
+  }
+
+  function getTile (int $x, int $y): ?Tile
   {
     if ($this->checkInBounds($x, $y))
     {
@@ -71,13 +71,13 @@ class Board {
     return null;
   }
 
-  function getTileFromInput ($input): ?Tile
+  function getTileFromInput (string $input): ?Tile
   {
     $coord=$this->getCoordinateFromInput($input);
     return $this->getTile($coord[0], $coord[1]);
   }
 
-  function getWinner ($checkers): ?Player {
+  function getWinner (Checkers $checkers): ?Player {
     $xs=$os=0;
 
     foreach (range(0, DIMENSIONS-1) as $row)
@@ -102,11 +102,11 @@ class Board {
     return false;
   }
 
-  public static function getCoordinateFromInput (string $input): array {
+  private function getCoordinateFromInput (string $input): array {
     return explode('-', $input);    
   }
 
-  function checkInBounds (int $x, int $y): bool {
+  private function checkInBounds (int $x, int $y): bool {
     if ($x>=0 && $y>=0)
     {
       if ($x<DIMENSIONS && $y<DIMENSIONS)
@@ -115,6 +115,25 @@ class Board {
       }
     }
     return false;
+  }
+
+  private function getStartingPlayer($players_array, $row, $column): ?Player
+  { 
+    if (in_array($row, range(0,2))) 
+    {
+      if ($column%2!=$row%2)
+      {
+        return $players_array[1];
+      }
+    }
+    if (in_array($row, range(DIMENSIONS-3, DIMENSIONS-1)))
+    {
+      if ($column%2!=$row%2)
+      {
+        return $players_array[0];
+      }  
+    }
+    return null;
   }
 
   function __toString (): string {
@@ -137,24 +156,4 @@ class Board {
     }
     return $ret;
   }
-
-  private function getStartingPlayer($players_array, $row, $column): ?Player
-  { 
-    if (in_array($row, range(0,2))) 
-    {
-      if ($column%2!=$row%2)
-      {
-        return $players_array[1];
-      }
-    }
-    if (in_array($row, range(DIMENSIONS-3, DIMENSIONS-1)))
-    {
-      if ($column%2!=$row%2)
-      {
-        return $players_array[0];
-      }  
-    }
-    return null;
-  }
-
 }

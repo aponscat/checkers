@@ -33,12 +33,12 @@ class Token {
     return $this->player;
   }
 
-  function getNextRow($offset=1): int
+  function getNextRow(int $offset=1): int
   {
     return $this->getTile()->getRow()+($this->getRowOffset($offset));
   }
 
-  function getRowOffset($offset): int
+  function getRowOffset(int $offset): int
   {
     return $offset*$this->row_direction;
   }

@@ -14,6 +14,9 @@ abstract class Player {
 
   static function createPlayer (Board $board, string $color, string $type): Player
   {
+    assert($type=='c'||$type=='h');
+    assert($color=='x'||$color=='o');
+    
     if ($type=='h')
     {
       return new HumanPlayer($board, $color);

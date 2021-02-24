@@ -19,29 +19,6 @@ class Movement {
     return $this->destination;
   }
 
-  function getOffset($a, $b): int
-  {
-    if ($a>$b)
-    {
-      $offset=-1;
-    }
-    else
-    {
-      $offset=+1;
-    }
-    return $offset;
-  }
-
-  function getColumnsOffset(): int
-  {
-    return $this->getOffset($this->getSource()->getColumn(), $this->getDestination()->getColumn());
-  }
-
-  function getRowsOffset(): int
-  {
-    return $this->getOffset($this->getSource()->getRow(), $this->getDestination()->getRow());
-  }
-
   function getAllTilesInTrajectory(): array {
     $source_tile=$this->getSource();
     $destination_tile=$this->getDestination();
@@ -99,5 +76,29 @@ class Movement {
       $token->convertToQueen();
     }
   }
+
+  private function getOffset(int $a, int $b): int
+  {
+    if ($a>$b)
+    {
+      $offset=-1;
+    }
+    else
+    {
+      $offset=+1;
+    }
+    return $offset;
+  }
+
+  private function getColumnsOffset(): int
+  {
+    return $this->getOffset($this->getSource()->getColumn(), $this->getDestination()->getColumn());
+  }
+
+  private function getRowsOffset(): int
+  {
+    return $this->getOffset($this->getSource()->getRow(), $this->getDestination()->getRow());
+  }
+
 
 }
