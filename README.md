@@ -18,6 +18,7 @@ Turn *-- "2" Player
 Board *-- "DIMENSIONxDIMENSION" Tile
 Tile o-- Token
 Player o-- Token
+Player *-- Board
 Trajectory o-- "1 starting" Tile
 Trajectory o-- "n" Tile
 Movement o-- "1 source" Tile
@@ -25,6 +26,7 @@ Movement o-- "1 destination" Tile
 Movement o-- Board
 
 class Checkers {
+
   play()
   initPlayer(string color)
   getPlayers()
@@ -36,7 +38,6 @@ class Checkers {
 
 abstract class Player {
   string color
-  Board board
 
   {static} createPlayer(Board, color, type): Player
   getColor(): string
@@ -130,8 +131,6 @@ class Trajectory {
 }
 
 class Movement {
-  Tile source
-  Tile destination
 
   getSource(): Tile
   getDestination(): Tile
