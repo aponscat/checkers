@@ -19,6 +19,19 @@ class Movements
         return $sources;
     }
 
+    public function getRandomKiller(): ?Movement {
+      if (!$this->movements) die('Tablas!');
+
+      shuffle($this->movements);
+      foreach ($this->movements as $movement)
+      {
+        if ($movement->isKiller()) {
+          return $movement;
+        }
+      }
+      return $this->movements[0];
+    }
+
     public function getDestinationsFromSource(Tile $source): array
     {
         $destinations=[];

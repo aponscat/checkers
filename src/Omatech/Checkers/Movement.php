@@ -5,6 +5,8 @@ class Movement
 {
     private Tile $source;
     private Tile $destination;
+    private bool $killEvaluated=false;
+    private bool $isKiller=false;
 
     public function __construct(Tile $source, Tile $destination)
     {
@@ -20,6 +22,12 @@ class Movement
     public function getDestination(): Tile
     {
         return $this->destination;
+    }
+
+    public function isKiller(): bool
+    {
+        assert($this->killEvaluated==true);
+        return $this->isKiller;
     }
 
     public function getAllTilesInTrajectory(Board $board): array
@@ -49,14 +57,14 @@ class Movement
         return $tiles;
     }
 
-    public function isKillerMovement(Board $board): bool
+    public function evaluateIfIsKiller(Board $board): void
     {
+        $this->killEvaluated=true;
         foreach ($this->getAllTilesInTrajectory($board) as $tile) {
             if ($tile->getToken() && $tile->getToken()->getColor()!=$this->source->getColor()) {
-                return true;
+                $this->isKiller=true;
             }
         }
-        return false;
     }
 
     public function do(Board $board): void
@@ -97,6 +105,10 @@ class Movement
 
     public function __toString(): string
     {
-        return $this->source->getCoordinate().' -> '.$this->destination->getCoordinate();
+        $addStr='';
+        if ($this->killEvaluated && $this->isKiller) {
+            $addStr.=' K';
+        }
+        return $this->source->getCoordinate().' -> '.$this->destination->getCoordinate().$addStr;
     }
 }

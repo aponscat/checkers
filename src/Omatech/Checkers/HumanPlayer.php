@@ -13,6 +13,7 @@ class HumanPlayer extends Player
 
     public function askForValidMovement(Movements $movements): Movement
     {
+        echo $this->getColor()." enter a valid movement:\n";
         echo $movements;
         $sourceTile=$this->getSourceChoice($movements);
         $destinationTile=$this->getDestinationChoice($sourceTile, $movements);

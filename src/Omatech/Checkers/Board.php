@@ -39,7 +39,9 @@ class Board
             $possibleDestinations=$source->getToken()->possibleDestinationTiles($this);
             if ($possibleDestinations) {
                 foreach ($possibleDestinations as $destination) {
-                    $possibleMovements[]=new Movement($source, $destination);
+                    $movement=new Movement($source, $destination);
+                    $movement->evaluateIfIsKiller($this);
+                    $possibleMovements[]=$movement;
                 }
             }
         }
