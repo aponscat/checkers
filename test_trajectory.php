@@ -26,7 +26,7 @@ foreach ($tiles as $tile)
     $tr3=new Trajectory($tile, -1, 1);
     $tr4=new Trajectory($tile, -1, -1);
 
-    echo "Starting Tile:".$tile->getCoordinates()."\n";
+    echo "Starting Tile:".$tile->getCoordinateString()."\n";
     echo "tr1=".$tr1;
     echo "tr2=".$tr2;
     echo "tr3=".$tr3;

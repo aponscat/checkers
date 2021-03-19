@@ -1,104 +1,89 @@
 <?php
 namespace Omatech\Checkers;
 
-class Tile {
+class Tile
+{
+    private ?Token $token;
+    private Coordinate $coordinate;
 
-  //private ?string $color;
-  private ?Token $token;
-  private int $row;
-  private int $column;
-  private Board $board;
-
-  function __construct (Board $board, int $row, int $column)
-  {
-    $this->setRow($row);
-    $this->setColumn($column);
-    $this->board=$board;
-  }
-
-  function getBoard(): Board {
-    return $this->board;
-  }
-
-  function setToken(Token $token): void {
-    $this->token=$token;
-  }
-
-  function getToken(): ?Token {
-    if (isset($this->token))
+    public function __construct(Coordinate $coordinate)
     {
-      return $this->token;
+        $this->coordinate=$coordinate;
     }
-    return null;
-  }
 
-  function getColor(): ?string
-  {
-    if (isset($this->token))
+    public function setToken(Token $token): void
     {
-      return $this->token->getColor();
+        $this->token=$token;
     }
-    return '_';
-  }
 
-  function getSymbol(): ?string
-  {
-    if (isset($this->token))
+    public function getCoordinate(): Coordinate
     {
-      return $this->token->getSymbol();
+        return $this->coordinate;
     }
-    return '-';
-  }
 
-  function getCoordinates(): string
-  {
-    return $this->getRow().'-'.$this->getColumn();
-  }
-
-  function removeToken(): void
-  {
-    if (isset($this->token))
+    public function getToken(): ?Token
     {
-      $this->token=null;
+        if (isset($this->token)) {
+            return $this->token;
+        }
+        return null;
     }
-  }
 
-  function isEmpty(): bool
-  {
-    return ($this->getToken()==null);
-  }
-
-  function setRow(int $row): void {
-    $this->row=$row;
-  }
-
-  function getRow(): int
-  {
-    return $this->row;
-  }
-
-  function setColumn(int $column): void {
-    $this->column=$column;
-  }
-
-  function getColumn(): int
-  {
-    return $this->column;
-  }
-
-  function __toString(): string {
-    return $this->getSymbol();
-  }
-
-  function debugString(): string {
-    $ret="\ntile debug: coordinates=".$this->getCoordinates();
-    if ($this->getToken())
+    public function getColor(): ?string
     {
-      return $ret." token=".$this->getSymbol()." for player=".$this->token->getPlayer()->getColor()."\n";
+        if (isset($this->token)) {
+            return $this->token->getColor();
+        }
+        return '_';
     }
-    else
+
+    public function getSymbol(): ?string
     {
-      return "$ret\n";
+        if (isset($this->token)) {
+            return $this->token->getSymbol();
+        }
+        return '-';
     }
-  }
+
+    public function getCoordinateString(): string
+    {
+        return (string)$this->coordinate;
+    }
+
+    public function removeToken(): void
+    {
+        if (isset($this->token)) {
+            $this->token=null;
+        }
+    }
+
+    public function isEmpty(): bool
+    {
+        return ($this->getToken()==null);
+    }
+
+    public function getRow(): int
+    {
+        return $this->coordinate->getRow();
+    }
+
+    public function getColumn(): int
+    {
+        return $this->coordinate->getColumn();
+    }
+
+    public function __toString(): string
+    {
+        return $this->getSymbol();
+    }
+
+    public function debugString(): string
+    {
+        $ret="\ntile debug: coordinates=".$this->getCoordinates();
+        if ($this->getToken()) {
+            return $ret." token=".$this->getSymbol()." for player=".$this->token->getPlayer()->getColor()."\n";
+        } else {
+            return "$ret\n";
+        }
+    }
 }

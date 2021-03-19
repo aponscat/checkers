@@ -1,68 +1,48 @@
 <?php
+
 namespace Omatech\Checkers;
-class Checkers {
 
-  private Board $board;
-  private Turn $turn;
-  private array $players_array;
-  private IO $io;
+class Checkers
+{
+    private Board $board;
+    private Turn $turn;
+    private IO $io;
 
-  function __construct()
-  {
-    $this->board=new Board();
-    $this->io=new IO();
-  }
-
-  function play(): void {
-    
-    $player1=$this->initPlayer('o');
-    $player2=$this->initPlayer('x');
-
-    $this->players_array=[$player1, $player2];
-    $this->turn=new Turn($this->players_array);
-    $this->board->init($this->players_array);
-
-    do {
-      $this->io->clearScreen();
-      $this->io->printBoard($this->board);
-      $movement=$this->turn->getCurrentPlayer()->askForValidMovement();
-      $movement->do();
-      $winner=$this->board->getWinner($this);
-      if (!$winner) $this->turn->changeToNextPlayer();
-    } while (!$winner);
-
-    $this->io->clearScreen();
-    echo "The winner is ".$winner->getColor()."\n";
-    $this->io->printBoard($this->board);
-  }
-
-  function initPlayer (string $color): Player
-  {
-    $type=$this->io->askForTypeOfPlayer($color);
-    $player=Player::createPlayer($this->board, $color, $type);
-    return $player;
-  }
-
-  function getPlayers(): array
-  {
-    return $this->players_array;
-  }
-
-  function getBoard(): Board {
-    return $this->board;
-  }
-
-  function getIO(): IO {
-    return $this->io;
-  }
-
-  function getPlayerByColor(string $color): Player
-  {
-    foreach ($this->players_array as $player)
+    public function __construct()
     {
-      if ($player->getColor()==$color) return $player;
+        $this->board = new Board();
+        $this->io = new IO();
     }
-    return null;
-  }
-}
 
+    public function play(): void
+    {
+        $playersArray=[];
+        $playersArray[0] = $this->initPlayer('o');
+        $playersArray[1] = $this->initPlayer('x');
+
+        $this->turn = new Turn($playersArray);
+        $this->board->init($playersArray);
+
+        do {
+            $this->io->clearScreen();
+            $this->io->printBoard($this->board);
+            $movement = $this->turn->getCurrentPlayer()->askForValidMovement($this->board);
+            $movement->do($this->board);
+            $winnerColor = $this->board->getWinnerColor();
+            if (!$winnerColor) {
+                $this->turn->changeToNextPlayer();
+            }
+        } while (!$winnerColor);
+
+        $this->io->clearScreen();
+        echo "The winner is $winnerColor\n";
+        $this->io->printBoard($this->board);
+    }
+
+    public function initPlayer(string $color): Player
+    {
+        $type = $this->io->askForTypeOfPlayer($color);
+        $player = Player::createPlayer($color, $type);
+        return $player;
+    }
+}

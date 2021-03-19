@@ -49,19 +49,19 @@ abstract class Player {
   getBoard(): Board
   getIO(): IO
   
-  {abstract} askForValidMovement(): Movement
+  {abstract} askForValidMovement(Board $board): Movement
   {abstract} getSourceChoice(Tile[] valid_sources, ?Tile[] killer_sources): Tile
   {abstract} getDestinationChoice(Tile source_tile): Tile
 }
 
 class HumanPlayer {
-  askForValidMovement(): Movement
+  askForValidMovement(Board $board): Movement
   getSourceChoice(Tile[] valid_sources, ?Tile[] killer_sources): Tile
   getDestinationChoice(Tile source_tile): Tile
 }
 
 class ComputerPlayer {
-  askForValidMovement(): Movement
+  askForValidMovement(Board $board): Movement
   getSourceChoice(Tile[] valid_sources, ?Tile[] killer_sources): Tile
   getDestinationChoice(Tile source_tile): Tile
 }
