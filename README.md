@@ -7,10 +7,10 @@ php play.php
 
 # UML Diagram
 
-![UML DIAGRAM](http://www.plantuml.com/plantuml/png/rLNDRY8v4BxtKrWeXoOYXztZQgLaboGpQ9Gmaw2PGnGXuww01xUDR3S1CRpxs6KRTnDuWBc0_RbS_kghdxunbchRrABuAkWMDFdtrzKL6QfwrLZG0UiSVMvgAYC-N01RWZR4uVyhggiEqlkxHquOJXejCw0SCXeN7YINtKleCO2teuUxn-VH-75pMFN8X0ie_0ywcQWboCJqyW1CDFq9p2gzHQlUNmG3vdAU71mPo8W_g3NK8EtXcceqWpE75HZdabgkJbuFsYJ88BsqIvHRa2aA9gWnvA3IhYW8MJd3ikyMN78RRfN6QXSAOKeetI_sHL7GcSCeioIuYDvtxbhRrllR6UiOiprX6gY5w16v3eBLWDZj2lh_f8mGCWSxz2Ub0uE_03wZEZvoV-B_0uxUF8IBW8t67d199yIpI8JtX9hblTBVgU1LagBCebtKSUak9xJO9wboMMAm9ts5WhgO-R-MatO4muNY34eVmCihMVlhqv1vCo3N4Lvo8K0dl1FlRIw4bgjOF5FhriayCS-zzYUI3wnsiIZB4CFBQpyu_4y8RsxAexqBBbZ62_4OosSpsBQszrhL8-dqYPKUZtvmATtjr1yUjRxTdu2o1LIV51Kbzdy_KnsDMzfEN5sFtxfDT16wg5lO-3X99ZKOG-VGjbcv_rZcGOoKeRNYlk2P0AgVcGQGPKGp9zGtg6U9LkznvOWqjIpEj901Yx652FDByuGxw1fNHmrxtUdORJrJeWkZiTALBm8mdHxNuDil-CzFSdDNh-pM8pEbH73nfDuzmB4uJTYxJOVe42DicoKeMsQPyDds33D8FkishRW6vWkt8CW4g7JalZK0ISQFiobc_sYyFS8cCIRgxSqHIoHZR6C4FvwV6Ov1Dkoa55TN_spAb5o3Tab4tbdcr3hfIyL3RlANw-Kr6E74m0uRoNnQvkM0T6YZALvUAMFuJ41h1CJEpLOv7OsMXwfbZTOWxNGLD8mo87XAORQWSku4yJBduswwCz_3AvkSuOXiMqZEi2dF10WRRgn9XPhVIdFKlTGUfUMvmPWFKbQEvKuM-2mtNt3UfcTQdLAfZv7dhztEWJSWgwOMlm40)
+![UML DIAGRAM](http://www.plantuml.com/plantuml/png/hLNFR-is3Bxxhn2279o7lCDs70QiMzfknj1cQuFjK1I5OZEfLbaA93cDaUL_7_L3bfMcm0xlaaWVAVBZHqg-qeOgqxMy-8FJ7XJvyT-lNyb2jhlEWF9OPlgjQwa8-E8LwZTGcY3-YwIgoP39znDomN7LAP40YKYrB2n8lkI7N4GFNbTtD_UFrVB-CAmcPCKu5FR71Ld9Dn2HwPS1M2dw3zH6gjvvJKGuToVtq88m7lsEQDcf6ZunDg0D4zGmUNuyLHuHNrBSHK8ZI1T5pQdMPD3WM1I4xD2ndE622MRygL8RnSIMr99BDIjEHL7GDMAqDiI72D6FU6piQ-CTjK72zOdK2gY12n7dyOpfTp37Bf0faxCVelo4RC4ih6E9e7T5q8QEB4w4whTRgVwYd3MnlZ8fCMt34WCCYfn2_NwIKWN_DvQ-62nExBUAvuVl6FfH-h1FppCloy-Ssp7GvTaUytdFS22OhQqypFlHzbR9jX98ERGacFvcGk3fE1eMDNQE7u3Mhz3yAYaltM3F4bLiN2ftXRrSRl9kJrsxXoRwJ2uvYIujQ4stCFRPuRznCfHUZBNzHO-zP0tQQmvKFTOAG9G1JPniYK4zGvHy3oiaqhMYy0nyR3pg5eXfCAusNs7Aj8quGZ-vLJQS28uBU-pRjUGPx9sbQkmb1ftDim8x23v-IidqJRiplKNMKd8Vua6-Mm0BiMJz7ZSPqOMhC7CBKF9CChcqu-kh7Vcasql35DJsuK7CCW4gaDoV7Q08QPfiFlllaT3ziwjy3uV8cCZD1eaD97rjImT-i7_s47ZPIfisrfNhdrnhAVQWi8d8EycShavyevdlJNgpdvwzaxl4xePL8bdBj9oJZBPpTOTtKcksvd2Tdl1mSvDNQaUdn32rTQSK2FEoyne66JnuGU7wbOej2c9bJkQytOdlaEMGEXoGVeIa3kloamBXmBJHSL1Jhk4BTGnjSH-uV516eYH3RCgvsj73PzrJtb43rQRIlpFEGOL7OkfVYU7Qi6XEK2Dptrobn5pdr5sDL2dQ1uvLT7HtFMu-LARjKnkgTy_ILBjD7ks1YaQsPVujk0BHT2t_3m00)
 
 
-
+´´´
 @startuml
 Player <|-- ComputerPlayer
 Player <|-- HumanPlayer
@@ -22,12 +22,11 @@ Turn *-- "2" Player
 Board *-- "DIMENSIONxDIMENSION" Tile
 Tile o-- Token
 Player *-- Token
-Trajectory o-- "1 starting" Tile
 Trajectory o-- "n" Tile
 Movement o-- "1 source" Tile
 Movement o-- "1 destination" Tile
-Movement o-- Board
-Movements *-- Movement
+Movement -- Board
+Movements o-- Movement
 Player -- Movements
 
 class Checkers {
@@ -40,25 +39,18 @@ class Checkers {
 abstract class Player {
   string color
 
-  {static} createPlayer(Board, color, type): Player
+  {static} createPlayer(string color, string type, IO $io): Player
   getColor(): string
-  getSourceTile(): Tile
-  getBoard(): Board
-  getIO(): IO
   
   {abstract} askForValidMovement(Movements $movement): Movement
 }
 
 class HumanPlayer {
-  askForValidMovement(Board $board): Movement
-  getSourceChoice(Tile[] valid_sources, ?Tile[] killer_sources): Tile
-  getDestinationChoice(Tile source_tile): Tile
+  askForValidMovement(Movements $movements): Movement
 }
 
 class ComputerPlayer {
-  askForValidMovement(Board $board): Movement
-  getSourceChoice(Tile[] valid_sources, ?Tile[] killer_sources): Tile
-  getDestinationChoice(Tile source_tile): Tile
+  askForValidMovement(Movements $movements): Movement
 }
 
 class Board {
@@ -130,14 +122,19 @@ class Trajectory {
 }
 
 class Movement {
-
   getSource(): Tile
   getDestination(): Tile
   getAllTilesInTrajectory(): Tile[]
-  isKillerMovement(): bool
-  do(): void
+  evaluateIfIsKiller(Board $board): bool
+  isKiller(): bool
+  do(Board $board): void
 }
 
 class Movements {
+  getSources(): array
+  getAIMovement(): ?Movement
+  getDestinationsFromSource(Tile $source): array
+  getRandom(): Movement
 }
 @enduml
+´´´

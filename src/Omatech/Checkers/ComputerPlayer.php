@@ -5,9 +5,9 @@ class ComputerPlayer extends Player
 {
     public function askForValidMovement(Movements $movements): Movement
     {
-      echo $this->getColor()." enter a valid movement:\n";
+        echo $this->getColor()." enter a valid movement:\n";
         echo $movements;
-        $choosenMovement=$movements->getRandomKiller();
+        $choosenMovement=$movements->getAIMovement();
         echo "\n".$this->getColor()." is moving from ".$choosenMovement;
         echo "\n";
         sleep(1);

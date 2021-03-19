@@ -19,7 +19,7 @@ class Movements
         return $sources;
     }
 
-    public function getRandomKiller(): ?Movement {
+    public function getAIMovement(): ?Movement {
       if (!$this->movements) die('Tablas!');
 
       shuffle($this->movements);

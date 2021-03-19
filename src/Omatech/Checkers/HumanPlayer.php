@@ -20,7 +20,7 @@ class HumanPlayer extends Player
         return new Movement($sourceTile, $destinationTile);
     }
 
-    public function getSourceChoice(Movements $movements)
+    private function getSourceChoice(Movements $movements)
     {
         $message='Player with color '.$this->getColor().', please enter a valid source tile: ';
         return $this->askForInputTile($message, $movements->getSources());
