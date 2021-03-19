@@ -7,36 +7,33 @@ php play.php
 
 # UML Diagram
 
-![UML DIAGRAM](http://www.plantuml.com/plantuml/png/rLLDRpCr4Bxlhx0Y3bkKzm372galJLk8K1je8pXKLUHufuc9rrxPtZIhal-EFppnxhOH4kB29R6V-PZ7ZpspNusbshQrA7uLj0DDVlZhonSoKtNJMj0H6vX-Rcig4pxR0jk1DkHRPxXML5T3QFBzX7pckcor72BpHU71SLJ86S6R-VtjmzDyyN0uhIPaoGKK_eSedrRjG2BP3q3ckDJqJs1MwIvuJRuZGGGkDvXnv20JVg_sK8Eqfp3LQWPdZ1KObv9QhZu9Hoe54zGOSjBYlIW8QHpXyi8jkEGsiY-DrOuVOKeexKqRI1PJfcr8Y9lveXnuNNSp7-d0Or4KTEtIKMP9h1vTN6r2-cKybNUdZENiI9W6QY6H2QMcqMjARDV0nMNA4ekcOfSfNmIVWbfU2M_n_ttY3WgBpF_Ilmf2F0iaV2JKxEwK_fqANg6StXFN0-TSTBPLd47fQpw_aBsFNiNBCrDobU0T5m8quaXndF0cNsilAubHA-lM67d4syMMGP7_-Gp_3V5_nnPx_tz3E0w9zzGlPUJz_9BU_uz2U7TJZlRkGD4p1IHpU9w7QTVRtcbLpwNJ93LXClt1fNJHsBeUjNxUF09bMwX-KbIKOG1TPAhpHK_FPTV0udNOtz-4dXerJYXEqAK6O-W6-ZwD-qzj5CLO-r_diLVSDnGJGFKJqm2oH1Gv1J6JUfPezPPMZaXRo-9CYngmuMpnXBdI1d47NONLQ21S3IP2Lw-LwC7eh7Jb7m6OmGpHKAizO7uioSrjtTZE8skbH4pngDuymCFZD77lDWEYit32lXj2sJFB5ChsPwG9vBDkgufhOFxX5YGm0IeTkTzQ09Jnm-p3wJuQdmzmGCP4lRuwOeaadcqHm3FsZyCtoXOwgQz0rZ-xCYNteDqb1jueSsuT_3BoU3VvI_dy4ft2b0WTDfVPMkRbb0ne1zSGt2XZ-5f0RmIapirU-JfQBK-lbhLQWxIh9cgOP0ZWPmgpBPKR9uYN6StZwyvyJrKE_HiEI9UHL3GIFdD0E71Z3JxKN0ldgAlK7wNbkS6O3NWhOxdH8vJbvfSmRx5ChrCgrJlvLv1LMuk_0G00)
+![UML DIAGRAM](http://www.plantuml.com/plantuml/png/rLNDRY8v4BxtKrWeXoOYXztZQgLaboGpQ9Gmaw2PGnGXuww01xUDR3S1CRpxs6KRTnDuWBc0_RbS_kghdxunbchRrABuAkWMDFdtrzKL6QfwrLZG0UiSVMvgAYC-N01RWZR4uVyhggiEqlkxHquOJXejCw0SCXeN7YINtKleCO2teuUxn-VH-75pMFN8X0ie_0ywcQWboCJqyW1CDFq9p2gzHQlUNmG3vdAU71mPo8W_g3NK8EtXcceqWpE75HZdabgkJbuFsYJ88BsqIvHRa2aA9gWnvA3IhYW8MJd3ikyMN78RRfN6QXSAOKeetI_sHL7GcSCeioIuYDvtxbhRrllR6UiOiprX6gY5w16v3eBLWDZj2lh_f8mGCWSxz2Ub0uE_03wZEZvoV-B_0uxUF8IBW8t67d199yIpI8JtX9hblTBVgU1LagBCebtKSUak9xJO9wboMMAm9ts5WhgO-R-MatO4muNY34eVmCihMVlhqv1vCo3N4Lvo8K0dl1FlRIw4bgjOF5FhriayCS-zzYUI3wnsiIZB4CFBQpyu_4y8RsxAexqBBbZ62_4OosSpsBQszrhL8-dqYPKUZtvmATtjr1yUjRxTdu2o1LIV51Kbzdy_KnsDMzfEN5sFtxfDT16wg5lO-3X99ZKOG-VGjbcv_rZcGOoKeRNYlk2P0AgVcGQGPKGp9zGtg6U9LkznvOWqjIpEj901Yx652FDByuGxw1fNHmrxtUdORJrJeWkZiTALBm8mdHxNuDil-CzFSdDNh-pM8pEbH73nfDuzmB4uJTYxJOVe42DicoKeMsQPyDds33D8FkishRW6vWkt8CW4g7JalZK0ISQFiobc_sYyFS8cCIRgxSqHIoHZR6C4FvwV6Ov1Dkoa55TN_spAb5o3Tab4tbdcr3hfIyL3RlANw-Kr6E74m0uRoNnQvkM0T6YZALvUAMFuJ41h1CJEpLOv7OsMXwfbZTOWxNGLD8mo87XAORQWSku4yJBduswwCz_3AvkSuOXiMqZEi2dF10WRRgn9XPhVIdFKlTGUfUMvmPWFKbQEvKuM-2mtNt3UfcTQdLAfZv7dhztEWJSWgwOMlm40)
 
 
 
 @startuml
 Player <|-- ComputerPlayer
 Player <|-- HumanPlayer
-Checkers *-- Board
-Checkers *-- "2" Player
-Checkers *-- Turn
-Checkers *-- IO
+Checkers -- Board
+Checkers -- "2" Player
+Checkers -- Turn
+Checkers o-- IO
 Turn *-- "2" Player
 Board *-- "DIMENSIONxDIMENSION" Tile
 Tile o-- Token
-Player o-- Token
-Player *-- Board
+Player *-- Token
 Trajectory o-- "1 starting" Tile
 Trajectory o-- "n" Tile
 Movement o-- "1 source" Tile
 Movement o-- "1 destination" Tile
 Movement o-- Board
+Movements *-- Movement
+Player -- Movements
 
 class Checkers {
 
   play()
   initPlayer(string color)
-  getPlayers()
-  getBoard()
-  getIO()
-  getPlayerByColor()
 }
 
 
@@ -49,9 +46,7 @@ abstract class Player {
   getBoard(): Board
   getIO(): IO
   
-  {abstract} askForValidMovement(Board $board): Movement
-  {abstract} getSourceChoice(Tile[] valid_sources, ?Tile[] killer_sources): Tile
-  {abstract} getDestinationChoice(Tile source_tile): Tile
+  {abstract} askForValidMovement(Movements $movement): Movement
 }
 
 class HumanPlayer {
@@ -141,5 +136,8 @@ class Movement {
   getAllTilesInTrajectory(): Tile[]
   isKillerMovement(): bool
   do(): void
+}
+
+class Movements {
 }
 @enduml
