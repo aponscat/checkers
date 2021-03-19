@@ -94,4 +94,9 @@ class Movement
     {
         return $this->getOffset($this->getSource()->getRow(), $this->getDestination()->getRow());
     }
+
+    public function __toString(): string
+    {
+        return $this->source->getCoordinate().' -> '.$this->destination->getCoordinate();
+    }
 }

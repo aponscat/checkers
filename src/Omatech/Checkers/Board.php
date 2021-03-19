@@ -31,32 +31,19 @@ class Board
         }
     }
 
-    public function getSourceTile(Player $player): Tile
+    public function getAllPossibleMoves(string $color): Movements
     {
-        $possible_sources=$this->getAllTilesForColor($player->getColor());
-        echo "\n".$player->getColor()." those are your possible moves:\n";
-        $valid_sources=$killer_sources=[];
-        foreach ($possible_sources as $source) {
-            $possible_destination_tiles=$source->getToken()->possibleDestinationTiles($this);
-            if ($possible_destination_tiles) {
-                foreach ($possible_destination_tiles as $destination) {
-                    echo $source->getCoordinateString().' -> '.$destination->getCoordinateString();
-                    $mov=new Movement($source, $destination);
-                    if ($mov->isKillerMovement($this)) {
-                        echo " K";
-                        $killer_sources[]=$source;
-                    }
-                    echo "\n";
-                    $valid_sources[]=$source;
+        $possibleMovements=[];
+        $possibleSources=$this->getAllTilesForColor($color);
+        foreach ($possibleSources as $source) {
+            $possibleDestinations=$source->getToken()->possibleDestinationTiles($this);
+            if ($possibleDestinations) {
+                foreach ($possibleDestinations as $destination) {
+                    $possibleMovements[]=new Movement($source, $destination);
                 }
             }
         }
-
-        if ($valid_sources) {
-            return $player->getSourceChoice($this, $valid_sources, $killer_sources);
-        } else {
-            die("Tablas");
-        }
+        return new Movements($possibleMovements);
     }
 
     public function getAllTiles(): array

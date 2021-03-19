@@ -3,50 +3,44 @@ namespace Omatech\Checkers;
 
 class HumanPlayer extends Player
 {
-    public function askForValidMovement(Board $board): Movement
+    private IO $io;
+
+    public function __construct(string $color, IO $io)
     {
-        $source_tile=$board->getSourceTile($this);
-        $destination_tile=$this->getDestinationChoice($board, $source_tile);
-        assert($source_tile->getRow()!=$destination_tile->getRow());
-        echo "\n".$this->getColor()." is moving from ".$source_tile->getCoordinateString()." to ".$destination_tile->getCoordinateString();
-        if ($destination_tile->getToken()!=null) {
-            echo ' '.$destination_tile->getSymbol();
-        }
-        echo "\n";
-        sleep(1);
-        return new Movement($source_tile, $destination_tile);
+        $this->io=$io;
+        parent::__construct($color);
     }
 
-    public function getSourceChoice(Board $board, array $valid_sources, ?array $killer_sources=[]): Tile
+    public function askForValidMovement(Movements $movements): Movement
     {
-        $input_source=$this->askForInput('Player with color '.$this->getColor().', please enter a valid source tile: ', $valid_sources);
-        $source_tile=$board->getTileFromInput($input_source);
-        return $source_tile;
+        echo $movements;
+        $sourceTile=$this->getSourceChoice($movements);
+        $destinationTile=$this->getDestinationChoice($sourceTile, $movements);
+        return new Movement($sourceTile, $destinationTile);
     }
 
-    public function getDestinationChoice(Board $board, Tile $source_tile): Tile
+    public function getSourceChoice(Movements $movements)
     {
-        $possible_destinations=$source_tile->getToken()->possibleDestinationTiles($board);
-        if ($possible_destinations) {
-            $input_destination=$this->askForInput('Player with color '.$this->getColor().', please, enter a valid destination: ', $possible_destinations);
-            $destination_tile=$board->getTileFromInput($input_destination);
-            return $destination_tile;
-        } else {
-            die("Tablas");
-        }
+        $message='Player with color '.$this->getColor().', please enter a valid source tile: ';
+        return $this->askForInputTile($message, $movements->getSources());
     }
 
-    private function askForInput(string $message, array $possibilities): string
+    private function getDestinationChoice(Tile $sourceTile, Movements $movements): Tile
+    {
+        $message='Player with color '.$this->getColor().', please enter a valid destination tile: ';
+        return $this->askForInputTile($message, $movements->getDestinationsFromSource($sourceTile));
+    }
+
+    private function askForInputTile(string $message, array $possibilities): Tile
     {
         assert($possibilities);
-        $io=$this->getIO();
-        $input=$io->getInput($message);
+        $input=$this->io->getInput($message);
         foreach ($possibilities as $possibility) {
-            if ($possibility->getCoordinateString()==$input) {
-                return $input;
+            if ($possibility->getCoordinate()==$input) {
+                return $possibility;
             }
         }
         echo "No es una casilla válida\n";
-        return $this->askForInput($message, $possibilities);
+        return $this->askForInputTile($message, $possibilities);
     }
 }

@@ -45,11 +45,6 @@ class Tile
         return '-';
     }
 
-    public function getCoordinateString(): string
-    {
-        return (string)$this->coordinate;
-    }
-
     public function removeToken(): void
     {
         if (isset($this->token)) {
